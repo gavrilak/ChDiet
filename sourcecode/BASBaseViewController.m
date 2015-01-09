@@ -170,7 +170,7 @@
     
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"LOGOUT" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-            NSLog(@"%@",responseObject);
+           // NSLog(@"%@",responseObject);
             if (FBSession.activeSession.state == FBSessionStateOpen)
                 [FBSession.activeSession closeAndClearTokenInformation];
             

@@ -14,7 +14,7 @@
 
 @interface BASMainViewController (){
     UIButton *curButton;
-    BOOL isButtonPress;
+  //  BOOL isButtonPress;
 }
 
 @property (nonatomic, strong) UIScrollView *scrollview;
@@ -34,7 +34,7 @@
     TheApp;
     [super viewDidLoad];
     
-    isButtonPress = NO;
+    _isButtonPress = NO;
     self.purchaes = [[InAppPurches alloc]init];
     _purchaes.delegate = (id) self;
     
@@ -65,7 +65,7 @@
     [self.view addSubview:app.tabView];
     app.tabView.delegate = self;
     
-    [self unlockFeature];
+    //[self unlockFeature];
     [self prepareView];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -208,23 +208,28 @@
     [_scrollview setContentSize:CGSizeMake(_scrollview.frame.size.width, posY)];
     
 }
+- (void)setButtonPressedNO{
+
+    _isButtonPress = NO;
+}
+
 - (void)clicked:(id)sender{
     TheApp;
     UIButton * button = (UIButton*)sender;
     
     
-    if(button == _oneButton && !isButtonPress){
-        isButtonPress = YES;
+    if(button == _oneButton && !_isButtonPress){
+        _isButtonPress = YES;
         [app showIndecator:YES withView:app.window];
         curButton = _oneButton;
         _purchaes.productID = feature1Id;
-    } else if(button == _sixButton && !isButtonPress){
-        isButtonPress = YES;
+    } else if(button == _sixButton && !_isButtonPress){
+        _isButtonPress = YES;
         [app showIndecator:YES withView:app.window];
         curButton = _sixButton;
         _purchaes.productID = feature2Id;
-    } else if(button == _yearButton && !isButtonPress){
-        isButtonPress = YES;
+    } else if(button == _yearButton && !_isButtonPress){
+        _isButtonPress = YES;
         [app showIndecator:YES withView:app.window];
         curButton = _yearButton;
         _purchaes.productID = feature3Id;
@@ -237,7 +242,6 @@
         app.loginType = FACEBOOK;
         [[BASManager sharedInstance] LogIn];
     }
-    
 }
 #pragma mark - Purchaise
 
@@ -271,8 +275,8 @@
 
     [self prepareView];
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Сообщение" message:@"Ваши покупки успешно завершены" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
+    //UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Сообщение" message:@"Ваши покупки успешно завершены" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    //[alert show];
     
 }
 #pragma mark - BASTabView delegate method

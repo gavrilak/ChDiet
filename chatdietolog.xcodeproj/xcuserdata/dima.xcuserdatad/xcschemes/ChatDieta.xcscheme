@@ -10,14 +10,14 @@
             buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "YES"
+            buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A5741A841993563400261E43"
                BuildableName = "ChatDieta.app"
-               BlueprintName = "chat"
-               ReferencedContainer = "container:chat.xcodeproj">
+               BlueprintName = "ChatDieta"
+               ReferencedContainer = "container:ChatDieta.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A5741AA81993563400261E43"
                BuildableName = "ChatDietaTests.xctest"
-               BlueprintName = "chatTests"
-               ReferencedContainer = "container:chat.xcodeproj">
+               BlueprintName = "ChatDietaTests"
+               ReferencedContainer = "container:ChatDieta.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,8 +48,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A5741AA81993563400261E43"
                BuildableName = "ChatDietaTests.xctest"
-               BlueprintName = "chatTests"
-               ReferencedContainer = "container:chat.xcodeproj">
+               BlueprintName = "ChatDietaTests"
+               ReferencedContainer = "container:ChatDieta.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A5741A841993563400261E43"
-            BuildableName = "ChatDieta.app"
-            BlueprintName = "chat"
-            ReferencedContainer = "container:chat.xcodeproj">
+            BuildableName = "chatdietolog.app"
+            BlueprintName = "chatdietolog"
+            ReferencedContainer = "container:chatdietolog.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A5741A841993563400261E43"
-            BuildableName = "ChatDieta.app"
-            BlueprintName = "chat"
-            ReferencedContainer = "container:chat.xcodeproj">
+            BuildableName = "chatdietolog.app"
+            BlueprintName = "chatdietolog"
+            ReferencedContainer = "container:chatdietolog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,8 +95,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A5741A841993563400261E43"
             BuildableName = "ChatDieta.app"
-            BlueprintName = "chat"
-            ReferencedContainer = "container:chat.xcodeproj">
+            BlueprintName = "ChatDieta"
+            ReferencedContainer = "container:ChatDieta.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

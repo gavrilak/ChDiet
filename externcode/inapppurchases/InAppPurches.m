@@ -8,7 +8,7 @@
 
 #import "InAppPurches.h"
 #import "MKStoreObserver.h"
-
+#import "BASMainViewController.h"
 
 
 @interface InAppPurches()
@@ -45,10 +45,30 @@
 - (void)buyProduct{
 
     //self.payment = [SKPayment paymentWithProductIdentifier:_productID];
-
-    self.payment = [SKPayment paymentWithProduct:_product];
-    [[SKPaymentQueue defaultQueue] addPayment:_payment];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Данная услуга платная, желаете купить ее?" delegate:self cancelButtonTitle:@"Отменить" otherButtonTitles:@"Купить", @"Восстановить покупки", nil];
+    //	alertView.tag = kInAppPurchasesAlertViewTag;
+    [alertView show];
+    
    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    TheApp;
+    if (alertView.cancelButtonIndex != buttonIndex) {
+        if (buttonIndex == 1) { //purchase in app
+            self.payment = [SKPayment paymentWithProduct:_product];
+            [[SKPaymentQueue defaultQueue] addPayment:_payment];
+        } else { //restore purchases
+            [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+        }
+    }
+    else{
+        _productID = nil;
+        [app showIndecator:NO withView:app.window];
+        
+        [app.mainController setButtonPressedNO];
+    }
 }
 -(void)getProductInfo
 {

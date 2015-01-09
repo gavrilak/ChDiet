@@ -116,6 +116,9 @@
     
 
 }
+- (void)viewDidAppear:(BOOL)animated{
+    
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [BASManager sharedInstance].delegate = self;
@@ -138,7 +141,7 @@
 }
 - (void)getData{
     TheApp;
-
+    
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"GETMESSAGES" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
             NSLog(@"%@",responseObject);
@@ -146,7 +149,7 @@
                       };
             [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SETMESSAGESREAD" withParam:param] success:^(NSDictionary* responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                    NSLog(@"%@",responseObject);
+                   // NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     
@@ -212,47 +215,53 @@
     
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SENDMESSAGE" withParam:param] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-            NSLog(@"%@",responseObject);
+            //NSLog(@"%@",responseObject);
             [app showIndecator:NO withView:self.view];
             [_sendButton setEnabled:YES];
             [_textField setEditable:YES];
-            NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
-            NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
+            if ([[responseObject objectForKey:@"command"] isEqualToString:@"BADREQUEST"]) {
+                [[BASManager sharedInstance] showAlertViewWithMess:@"Превышена максимальная длина сообщения"];
+            }
+            else{
+                NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
+                NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
             
-            [self.messagesNat removeAllObjects];
-            [self.messagesNat addObjectsFromArray:(NSArray*)[dict objectForKey:@"nutritionist"]];
+                [self.messagesNat removeAllObjects];
+                [self.messagesNat addObjectsFromArray:(NSArray*)[dict objectForKey:@"nutritionist"]];
             
-            [self.messagesSupport removeAllObjects];
-            [self.messagesSupport addObjectsFromArray:(NSArray*)[dict objectForKey:@"support"]];
+                [self.messagesSupport removeAllObjects];
+                [self.messagesSupport addObjectsFromArray:(NSArray*)[dict objectForKey:@"support"]];
             
-            NSNumber* support_count = (NSNumber*)[dict objectForKey:@"support_count"];
-            NSNumber* nutritionist_count = (NSNumber*)[dict objectForKey:@"nutritionist_count"];
-            nutritionistState = [nutritionist_count integerValue];
-            supportState = [support_count integerValue];
-            NSNumber* nutritionist_status = (NSNumber*)[dict objectForKey:@"nutritionist_status"];
-            [app.tabView showState:0 withState:(BOOL)[nutritionist_status integerValue]];
-            NSNumber* support_status = (NSNumber*)[dict objectForKey:@"support_status"];
-            [app.tabView showState:1 withState:(BOOL)[support_status integerValue]];
+                NSNumber* support_count = (NSNumber*)[dict objectForKey:@"support_count"];
+                NSNumber* nutritionist_count = (NSNumber*)[dict objectForKey:@"nutritionist_count"];
+                nutritionistState = [nutritionist_count integerValue];
+                supportState = [support_count integerValue];
+                NSNumber* nutritionist_status = (NSNumber*)[dict objectForKey:@"nutritionist_status"];
+                [app.tabView showState:0 withState:(BOOL)[nutritionist_status integerValue]];
+                NSNumber* support_status = (NSNumber*)[dict objectForKey:@"support_status"];
+                [app.tabView showState:1 withState:(BOOL)[support_status integerValue]];
             
-            if(app.tabView.tabIndex == 0){
-                self.messages = [NSArray arrayWithArray:_messagesNat];
+                if(app.tabView.tabIndex == 0){
+                    self.messages = [NSArray arrayWithArray:_messagesNat];
                 
                 [app.tabView showNoticesCount:supportState withSatate:NO];
                 
-            } else {
-                self.messages = [NSArray arrayWithArray:_messagesSupport];
-                [app.tabView showNoticesCount:nutritionistState withSatate:YES];
+                } else {
+                    self.messages = [NSArray arrayWithArray:_messagesSupport];
+                    [app.tabView showNoticesCount:nutritionistState withSatate:YES];
                 
+                }
+                [_tableView reloadData];
+                if(_messages.count > 0){
+                    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:_messages.count -1] animated:YES scrollPosition:UITableViewScrollPositionBottom];
+                }
+                _textField.text = @"";
             }
-            [_tableView reloadData];
-            if(_messages.count > 0){
-                [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:_messages.count -1] animated:YES scrollPosition:UITableViewScrollPositionBottom];
-            }
-            _textField.text = @"";
-            
  
         }
     }failure:^(NSString *error) {
+        [_sendButton setEnabled:YES];
+        [_textField setEditable:YES];
         NSLog(@"%@",error);
     }];
 
@@ -328,7 +337,7 @@
     
     headerLabel.backgroundColor      = [UIColor clearColor];
     headerLabel.opaque               = NO;
-    headerLabel.textColor            = [UIColor darkGrayColor];
+    headerLabel.textColor            = [UIColor whiteColor];
     headerLabel.highlightedTextColor = [UIColor whiteColor];
     headerLabel.font                 = [UIFont boldSystemFontOfSize:12];
     headerLabel.frame                = CGRectMake(115.0, 0.0, 300.0, 20.0);
@@ -414,12 +423,12 @@
     
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"GETMESSAGES" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-            NSLog(@"%@",responseObject);
+            //NSLog(@"%@",responseObject);
             NSDictionary* param = @{@"level":[NSNumber numberWithInt:(int)index + 1]
                                     };
             [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SETMESSAGESREAD" withParam:param] success:^(NSDictionary* responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                    NSLog(@"%@",responseObject);
+                    //NSLog(@"%@",responseObject);
                     [app showIndecator:NO withView:self.view];
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
