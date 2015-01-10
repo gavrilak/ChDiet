@@ -18,6 +18,7 @@
 
 typedef enum SocialType {
     FACEBOOKTYPE,
+    GUESTTYPE,
     VKTYPE,
     LOCALTYPE
 }SocialType;

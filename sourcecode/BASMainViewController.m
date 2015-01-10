@@ -23,6 +23,7 @@
 @property (nonatomic,strong) UIButton* sixButton;
 @property (nonatomic,strong) UIButton* yearButton;
 @property (nonatomic,strong) UIButton* inButton;
+@property (nonatomic,strong) UIButton* guestButton;
 @property (nonatomic,strong) UIButton* fbButton;
 @property (nonatomic,strong) UIButton* registrButton;
 @property (nonatomic,strong) InAppPurches* purchaes;
@@ -40,21 +41,12 @@
     
     CGRect frame = [[UIScreen mainScreen]bounds];
 
-    
-    
-
     self.scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, app.tabView.frame.origin.y)];
     _scrollview.showsHorizontalScrollIndicator = NO;
     _scrollview.showsVerticalScrollIndicator = NO;
     [_scrollview setBounces:NO];
     [_scrollview setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview: _scrollview];
-    
-   
-    
-    
-    
-
     
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -91,6 +83,8 @@
     _inButton  = nil;
     [_fbButton removeFromSuperview];
     _fbButton  = nil;
+    [_guestButton removeFromSuperview];
+    _guestButton = nil;
     [_registrButton removeFromSuperview];
     _registrButton  = nil;
     
@@ -101,15 +95,16 @@
     if(IS_IPHONE_6)
         image = [UIImage imageNamed:@"text_nutritionist_6.png"];
     self.infoView = [[UIImageView alloc]initWithImage:image];
-    [_infoView setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, _scrollview.frame.origin.y + 15.f, frame.size.width, image.size.height)];
+    [_infoView setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, _scrollview.frame.origin.y + 5.f, frame.size.width, image.size.height)];
     [_scrollview addSubview:_infoView];
     
-    CGFloat posY = _infoView.frame.origin.y + _infoView.frame.size.height + 15.f;
+    CGFloat posY = _infoView.frame.origin.y + _infoView.frame.size.height + 10.f ;
 
     
     if(app.tabView.tabIndex == 1 || app.isPurchaise){
 
         if(app.isPurchaise){
+            
             if(app.tabView.tabIndex == 1){
                 image = [UIImage imageNamed:@"text_technical_support.png"];
                 if(IS_IPHONE_6)
@@ -130,19 +125,32 @@
             [_inButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
             [_scrollview addSubview:_inButton];
             
-            posY += (_inButton.frame.size.height + 10.f);
+            posY += (_inButton.frame.size.height );
+            
+            image = [UIImage imageNamed:@"button_guest_in.png"];
+            if(!IS_IPHONE_5)
+                image = [UIImage imageNamed:@"button_guest_in@3x.png"];
+            self.guestButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_guestButton setBackgroundColor:[UIColor clearColor]];
+            [_guestButton setBackgroundImage:image forState:UIControlStateNormal];
+            [_guestButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+            [_guestButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_scrollview addSubview:_guestButton];
+            
+            posY += (_inButton.frame.size.height );
             
             image = [UIImage imageNamed:@"button_sign_in_fb.png"];
             if(!IS_IPHONE_5)
                 image = [UIImage imageNamed:@"button_sign_in_fb@3x.png"];
             self.fbButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [_fbButton setBackgroundColor:[UIColor clearColor]];
+          
             [_fbButton setBackgroundImage:image forState:UIControlStateNormal];
             [_fbButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
             [_fbButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
             [_scrollview addSubview:_fbButton];
             
-            posY += (_fbButton.frame.size.height + 10.f);
+            posY += (_fbButton.frame.size.height );
             
             image = [UIImage imageNamed:@"button_register.png"];
             if(!IS_IPHONE_5)
@@ -153,7 +161,7 @@
             [_registrButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
             [_registrButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
             [_scrollview addSubview:_registrButton];
-            posY += (_registrButton.frame.size.height + 15.f);
+            posY += (_registrButton.frame.size.height );
             
         } else{
             image = [UIImage imageNamed:@"bg_support.png"];
@@ -168,6 +176,8 @@
         
 
     } else {
+        
+        posY += 10.f ;
         image = [UIImage imageNamed:@"button_799.png"];
         if(!IS_IPHONE_5)
             image = [UIImage imageNamed:@"button_799@3x.png"];
@@ -179,7 +189,6 @@
         [_scrollview addSubview:_oneButton];
        
         posY += (_oneButton.frame.size.height + 10.f);
-        
         image = [UIImage imageNamed:@"button_2090.png"];
         if(!IS_IPHONE_5)
             image = [UIImage imageNamed:@"button_2090@3x.png"];
@@ -240,6 +249,9 @@
         [app.navigationController pushViewController:app.inputController animated:YES];
     }  else if(button == _fbButton){
         app.loginType = FACEBOOK;
+        [[BASManager sharedInstance] LogIn];
+    }  else if(button == _guestButton){
+        app.loginType = GUEST;
         [[BASManager sharedInstance] LogIn];
     }
 }

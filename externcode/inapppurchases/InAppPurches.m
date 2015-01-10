@@ -122,13 +122,20 @@
 #pragma mark SKPaymentTransactionObserverDelegate
     
 - (void) failedTransaction: (SKPaymentTransaction *)transaction{
+    TheApp;
+    NSLog(@"Error: %@",transaction.error);
+    _productID = nil;
+    [app showIndecator:NO withView:app.window];
     
+    [app.mainController setButtonPressedNO];
 }
 - (void) completeTransaction: (SKPaymentTransaction *)transaction{
+     NSLog(@"Date: %@",transaction.transactionDate);
     if([_delegate respondsToSelector:@selector(unlockFeature)])
         [_delegate unlockFeature];
 }
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction{
+     NSLog(@"Date: %@",transaction.transactionDate);
     if([_delegate respondsToSelector:@selector(unlockFeature)])
         [_delegate unlockFeature];
 }

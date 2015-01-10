@@ -110,6 +110,46 @@
     NSString *timezone = [objDateFormatter stringFromDate:[NSDate date]];
     
     switch (app.loginType) {
+        case GUEST:{
+            NSString* UIUD =  [[[UIDevice currentDevice] identifierForVendor]UUIDString];
+            
+            __block NSDictionary* param = @{
+                                            @"uid" : UIUD,
+                                            @"timezone" : timezone
+                                          };
+            [self getData: [[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param]success:^(NSDictionary *responseObject) {
+                if([responseObject isKindOfClass:[NSDictionary class]]){
+                    //NSLog(@"%@",responseObject);
+                    NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
+                    NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
+                    app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                    [userDefaults synchronize];
+                    
+                    NSNumber* isPurches = (NSNumber*)[dict objectForKey:@"isPurches"];
+                    
+                    if([isPurches integerValue] == 0){
+                        [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        [defaults removeObjectForKey:@"isPurchaise"];
+                        [defaults removeObjectForKey:@"isPurchaiseTermin"];
+                        [defaults removeObjectForKey:@"isPurchaiseDate"];
+                        [defaults synchronize];
+                        app.isPurchaise = NO;
+                        app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+                        [app.window setRootViewController:app.navigationController];
+                    } else {
+                        app.chatController = [[BASChatViewController alloc]init];
+                        app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
+                        [app.window setRootViewController:app.navigationController];
+                    }
+                }
+            } failure:^(NSString *error) {
+                 NSLog(@"%@",error); }];
+            
+            }
+            break;
         case LOCAL:{
 
             __block NSDictionary* param = @{
@@ -119,7 +159,7 @@
                                     };
             [self getData:[[BASManager sharedInstance] formatRequest:@"AUTH" withParam:param] success:^(NSDictionary* responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                    NSLog(@"%@",responseObject);
+                    //NSLog(@"%@",responseObject);
                     
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
@@ -137,7 +177,7 @@
                                             @"push_token" :app.pushToken,
                                             };
                     [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
-                        NSLog(@"%@",responseObject);
+                       // NSLog(@"%@",responseObject);
                         app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
                         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                         [userDefaults removeObjectForKey:@""];
@@ -212,7 +252,7 @@
                                                                                };
                                                        [self getData:[[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param] success:^(NSDictionary* responseObject) {
                                                            if([responseObject isKindOfClass:[NSDictionary class]]){
-                                                               NSLog(@"%@",responseObject);
+                                                             //  NSLog(@"%@",responseObject);
                                                                NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                                                                NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                                                               
@@ -244,12 +284,12 @@
                                                                                  @"term" : term
                                                                                  };
                                                                        [self getData:[[BASManager sharedInstance] formatRequest:@"SETPURCHES" withParam:param] success:^(NSDictionary* responseObject) {
-                                                                           NSLog(@"%@",responseObject);
+                                                                          // NSLog(@"%@",responseObject);
                                                                            NSDictionary* param = @{
                                                                                                    @"push_token" :app.pushToken,
                                                                                                    };
                                                                            [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
-                                                                               NSLog(@"%@",responseObject);
+                                                                             //  NSLog(@"%@",responseObject);
                                                                                app.chatController = [[BASChatViewController alloc]init];
                                                                                app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
                                                                                [app.window setRootViewController:app.navigationController];
@@ -329,15 +369,29 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error;
 {
+    TheApp;
     NSLog(@":( Websocket Failed With Error %@", error);
     isConnect = NO;
-    if (error.code == 60)  // timeout
-        [self showAlertViewWithMess:@"Отсутствует связь с сервером! Перезапустите приложение!"];
+    if (error.code == 60 || error.code == 61)  // timeout
+        [self showAlertViewWithMess:@"Отсутствует связь с сервером! Повторите соединение через несколько минут!"];
+    
+    if (error.code == 51) //no internet
+        [self showAlertViewWithMess:@"Отсутствует интернет соединение! Повторите соединение позже!"];
+    
+   if( _failure!= nil)
+       _failure(error.localizedDescription);
+        
+    [app showIndecator:NO withView:app.window];
+
+}
+- (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload{
+    //NSLog(@"pong");
+    [webSocket sendPing:nil];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message;
 {
-    NSLog(@"Received \"%@\"", message);
+    //NSLog(@"Received \"%@\"", message);
     
     
     NSData* responceData = [message dataUsingEncoding:NSUTF8StringEncoding];
@@ -358,10 +412,17 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean;
 {
-    NSLog(@"WebSocket closed");
+    NSLog(@"WebSocket closed %u, %@",code,reason);
     isConnect = NO;
-    [self showAlertViewWithMess:@"Отсутствует связь с сервером! Перезапустите приложение!"];
-
+    if(code == 1010){
+        [self showAlertViewWithMess:@"Был осуществлен вход с другого устройства! Перезапустите приложение!"];
+    }
+    else if (code!=1063){
+        [self showAlertViewWithMess:@"Отсутствует связь с сервером! Перезапустите приложение!"];
+    }
+    
+    if(_failure!=nil)
+        _failure(reason);
     _webSocket = nil;
 }
 

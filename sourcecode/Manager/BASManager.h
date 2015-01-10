@@ -11,6 +11,7 @@
 typedef enum{
     LOCAL,
     FACEBOOK,
+    GUEST,
     VK,
     FORGOT,
     CREATE

@@ -10,6 +10,8 @@
 
 @interface BASMainViewController : BASBaseViewController
 
+@property (nonatomic, assign) BOOL isButtonPress;
+- (void) setButtonPressedNO;
 
 @end
 

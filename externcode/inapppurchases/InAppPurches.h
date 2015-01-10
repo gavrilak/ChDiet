@@ -11,7 +11,7 @@
 
 @protocol InAppPurchesDelegate;
 
-@interface InAppPurches : NSObject
+@interface InAppPurches : NSObject <UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSString *productID;
 @property (assign, nonatomic) id<InAppPurchesDelegate> delegate;
