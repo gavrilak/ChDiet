@@ -119,34 +119,19 @@
                                           };
             [self getData: [[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param]success:^(NSDictionary *responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                    //NSLog(@"%@",responseObject);
+                   // NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
                     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                     [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
                     [userDefaults synchronize];
-                    
-                    NSNumber* isPurches = (NSNumber*)[dict objectForKey:@"isPurches"];
-                    
-                    if([isPurches integerValue] == 0){
-                        [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
-                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                        [defaults removeObjectForKey:@"isPurchaise"];
-                        [defaults removeObjectForKey:@"isPurchaiseTermin"];
-                        [defaults removeObjectForKey:@"isPurchaiseDate"];
-                        [defaults synchronize];
-                        app.isPurchaise = NO;
-                        app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
-                        [app.window setRootViewController:app.navigationController];
-                    } else {
-                        app.chatController = [[BASChatViewController alloc]init];
-                        app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
-                        [app.window setRootViewController:app.navigationController];
-                    }
+                    [self checkPurshes];
+                  
                 }
             } failure:^(NSString *error) {
-                 NSLog(@"%@",error); }];
+                    NSLog(@"%@",error);
+                }];
             
             }
             break;
@@ -159,8 +144,7 @@
                                     };
             [self getData:[[BASManager sharedInstance] formatRequest:@"AUTH" withParam:param] success:^(NSDictionary* responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                    //NSLog(@"%@",responseObject);
-                    
+                   // NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
@@ -171,51 +155,20 @@
                         }
                         return;
                     }
-                   
-                    
-                    NSDictionary* param = @{
-                                            @"push_token" :app.pushToken,
-                                            };
-                    [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
-                       // NSLog(@"%@",responseObject);
-                        app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
-                        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                        [userDefaults removeObjectForKey:@""];
-                        [userDefaults removeObjectForKey:@""];
-                        [userDefaults removeObjectForKey:@""];
-                        [userDefaults synchronize];
-                        [userDefaults setObject:app.login forKey:@"login"];
-                        [userDefaults setObject:app.pass forKey:@"password"];
-                        [userDefaults setObject:app.userInfo forKey:@"userInfo"];
-                        [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                        [userDefaults synchronize];
-                        
-                        NSNumber* isPurches = (NSNumber*)[dict objectForKey:@"isPurches"];
-                        
-                        if([isPurches integerValue] == 0){
-                            [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
-                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                            [defaults removeObjectForKey:@"isPurchaise"];
-                            [defaults removeObjectForKey:@"isPurchaiseTermin"];
-                            [defaults removeObjectForKey:@"isPurchaiseDate"];
-                            [defaults synchronize];
-                            app.isPurchaise = NO;
-                            app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
-                            [app.window setRootViewController:app.navigationController];
-                        } else {
-                            app.chatController = [[BASChatViewController alloc]init];
-                            app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
-                            [app.window setRootViewController:app.navigationController];
-                        }
-                        
-                        
-                    }failure:^(NSString *error) {
-                        NSLog(@"%@",error);
-                    }];
-
-                    
-                    
- 
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults removeObjectForKey:@""];
+                    [userDefaults removeObjectForKey:@""];
+                    [userDefaults removeObjectForKey:@""];
+                    [userDefaults synchronize];
+                    [userDefaults setObject:app.login forKey:@"login"];
+                    [userDefaults setObject:app.pass forKey:@"password"];
+                    [userDefaults setObject:app.userInfo forKey:@"userInfo"];
+                    [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                    [userDefaults synchronize];
+                    app.login = (NSString*)[app.userInfo objectForKey:@"login"];
+                    app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
+                    [self checkPurshes];
+                                              
                 }
             }failure:^(NSString *error) {
                 NSLog(@"%@",error);
@@ -274,39 +227,9 @@
                                                                    app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                                                                    app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                                                          
-                                                                   NSNumber* isPurches = (NSNumber*)[dict objectForKey:@"isPurches"];
-                                                                   if([isPurches integerValue] == -1){
-                                                                       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                                                       NSString* date = (NSString*)[defaults objectForKey:@"isPurchaiseDate"];
-                                                                       NSNumber* term = (NSNumber*)[defaults objectForKey:@"isPurchaiseTermin"];
-                                                                      NSDictionary* param = @{
-                                                                                 @"date" :date,
-                                                                                 @"term" : term
-                                                                                 };
-                                                                       [self getData:[[BASManager sharedInstance] formatRequest:@"SETPURCHES" withParam:param] success:^(NSDictionary* responseObject) {
-                                                                          // NSLog(@"%@",responseObject);
-                                                                           NSDictionary* param = @{
-                                                                                                   @"push_token" :app.pushToken,
-                                                                                                   };
-                                                                           [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
-                                                                             //  NSLog(@"%@",responseObject);
-                                                                               app.chatController = [[BASChatViewController alloc]init];
-                                                                               app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
-                                                                               [app.window setRootViewController:app.navigationController];
-                                                                           }failure:^(NSString *error) {
-                                                                               NSLog(@"%@",error);
-                                                                           }];
-                                                                         
-
-                                                                       }failure:^(NSString *error) {
-                                                                           NSLog(@"%@",error);
-                                                                       }];
-                                                                   }  else {
-                                                                       app.chatController = [[BASChatViewController alloc]init];
-                                                                       app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
-                                                                       [app.window setRootViewController:app.navigationController];
-                                                                   }
-
+                                                                   [self checkPurshes];
+                                                                   
+                                                                 
                                                                }
                                                                
                                                            }
@@ -329,6 +252,53 @@
     }
 
 }
+
+
+-(void) checkPurshes {
+    TheApp;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* date = (NSString*)[userDefaults objectForKey:@"isPurchaiseDate"];
+    NSNumber* term = (NSNumber*)[userDefaults objectForKey:@"isPurchaiseTermin"];
+    NSDictionary* param = @{
+                            @"date" :date,
+                            @"term" : term
+                            };
+
+    [self getData:[[BASManager sharedInstance] formatRequest:@"SETPURCHES" withParam:param] success:^(NSDictionary* responseObject) {
+        // NSLog(@"%@",responseObject);
+        NSNumber* isPurches = (NSNumber*)[[[responseObject objectForKey:@"param"]objectAtIndex:0]objectForKey:@"isPurches"];
+        
+        if([isPurches integerValue] == 0){
+            [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults removeObjectForKey:@"isPurchaise"];
+            [defaults removeObjectForKey:@"isPurchaiseTermin"];
+            [defaults removeObjectForKey:@"isPurchaiseDate"];
+            [defaults synchronize];
+            app.isPurchaise = NO;
+            app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+            [app.window setRootViewController:app.navigationController];
+        } else {
+            
+            NSDictionary* param = @{
+                                    @"push_token" :app.pushToken,
+                                    };
+            [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
+                //  NSLog(@"%@",responseObject);
+                app.chatController = [[BASChatViewController alloc]init];
+                app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
+                [app.window setRootViewController:app.navigationController];
+            }failure:^(NSString *error) {
+                NSLog(@"%@",error);
+            }];
+        }
+        
+    }failure:^(NSString *error) {
+        NSLog(@"%@",error);
+    }];
+
+}
+
 - (void)LogOut{
    
 }

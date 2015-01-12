@@ -131,12 +131,14 @@
 }
 - (void) completeTransaction: (SKPaymentTransaction *)transaction{
      NSLog(@"Date: %@",transaction.transactionDate);
-    if([_delegate respondsToSelector:@selector(unlockFeature)])
-        [_delegate unlockFeature];
+    if([_delegate respondsToSelector:@selector(unlockFeatureForDate:)])
+        [_delegate unlockFeatureForDate:transaction.transactionDate];
 }
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction{
-     NSLog(@"Date: %@",transaction.transactionDate);
-    if([_delegate respondsToSelector:@selector(unlockFeature)])
-        [_delegate unlockFeature];
+    
+     NSLog(@"Date: %@",transaction.originalTransaction.transactionDate);
+   NSLog(@"restore");
+    if([_delegate respondsToSelector:@selector(unlockFeatureForDate:)])
+        [_delegate unlockFeatureForDate:transaction.originalTransaction.transactionDate];
 }
 @end
