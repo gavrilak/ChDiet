@@ -5,7 +5,7 @@
 //  Created by Sergey on 09.10.14.
 //  Copyright (c) 2014 BestAppStudio. All rights reserved.
 //
-
+#import "BASAppDelegate.h"
 #import "BASMainViewController.h"
 #import "BASChatViewController.h"
 #import "BASRegistrationViewController.h"
@@ -20,8 +20,8 @@
 @property (nonatomic, strong) UIScrollView *scrollview;
 @property (nonatomic, strong) UIImageView* infoView;
 @property (nonatomic,strong) UIButton* oneButton;
+@property (nonatomic,strong) UIButton* treeButton;
 @property (nonatomic,strong) UIButton* sixButton;
-@property (nonatomic,strong) UIButton* yearButton;
 @property (nonatomic,strong) UIButton* inButton;
 @property (nonatomic,strong) UIButton* guestButton;
 @property (nonatomic,strong) UIButton* fbButton;
@@ -56,8 +56,6 @@
     [self setupNavBtn:MENUTYPE];
     [self.view addSubview:app.tabView];
     app.tabView.delegate = self;
-    
-    //[self unlockFeature];
     [self prepareView];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -77,8 +75,8 @@
     _oneButton  = nil;
     [_sixButton removeFromSuperview];
     _sixButton  = nil;
-    [_yearButton removeFromSuperview];
-    _yearButton  = nil;
+    [_treeButton removeFromSuperview];
+    _treeButton  = nil;
     [_inButton removeFromSuperview];
     _inButton  = nil;
     [_fbButton removeFromSuperview];
@@ -178,9 +176,9 @@
     } else {
         
         posY += 10.f ;
-        image = [UIImage imageNamed:@"button_799.png"];
+        image = [UIImage imageNamed:@"button_899.png"];
         if(!IS_IPHONE_5)
-            image = [UIImage imageNamed:@"button_799@3x.png"];
+            image = [UIImage imageNamed:@"button_899@3x.png"];
         self.oneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_oneButton setBackgroundColor:[UIColor clearColor]];
         [_oneButton setBackgroundImage:image forState:UIControlStateNormal];
@@ -189,28 +187,28 @@
         [_scrollview addSubview:_oneButton];
        
         posY += (_oneButton.frame.size.height + 10.f);
-        image = [UIImage imageNamed:@"button_2090.png"];
+        image = [UIImage imageNamed:@"button_2390.png"];
         if(!IS_IPHONE_5)
-            image = [UIImage imageNamed:@"button_2090@3x.png"];
+            image = [UIImage imageNamed:@"button_2390@3x.png"];
+        self.treeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_treeButton setBackgroundColor:[UIColor clearColor]];
+        [_treeButton setBackgroundImage:image forState:UIControlStateNormal];
+        [_treeButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+        [_treeButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollview addSubview:_treeButton];
+        
+        posY += (_treeButton.frame.size.height + 10.f);
+        
+        image = [UIImage imageNamed:@"button_4290.png"];
+        if(!IS_IPHONE_5)
+            image = [UIImage imageNamed:@"button_4290@3x.png"];
         self.sixButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sixButton setBackgroundColor:[UIColor clearColor]];
         [_sixButton setBackgroundImage:image forState:UIControlStateNormal];
         [_sixButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
         [_sixButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollview addSubview:_sixButton];
-        
-        posY += (_sixButton.frame.size.height + 10.f);
-        
-        image = [UIImage imageNamed:@"button_3490.png"];
-        if(!IS_IPHONE_5)
-            image = [UIImage imageNamed:@"button_3490@3x.png"];
-        self.yearButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_yearButton setBackgroundColor:[UIColor clearColor]];
-        [_yearButton setBackgroundImage:image forState:UIControlStateNormal];
-        [_yearButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-        [_yearButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollview addSubview:_yearButton];
-        posY += (_yearButton.frame.size.height + 15.f);
+        posY += (_sixButton.frame.size.height + 15.f);
 
     }
     
@@ -232,15 +230,15 @@
         [app showIndecator:YES withView:app.window];
         curButton = _oneButton;
         _purchaes.productID = feature1Id;
+    } else if(button == _treeButton && !_isButtonPress){
+        _isButtonPress = YES;
+        [app showIndecator:YES withView:app.window];
+        curButton = _treeButton;
+        _purchaes.productID = feature2Id;
     } else if(button == _sixButton && !_isButtonPress){
         _isButtonPress = YES;
         [app showIndecator:YES withView:app.window];
         curButton = _sixButton;
-        _purchaes.productID = feature2Id;
-    } else if(button == _yearButton && !_isButtonPress){
-        _isButtonPress = YES;
-        [app showIndecator:YES withView:app.window];
-        curButton = _yearButton;
         _purchaes.productID = feature3Id;
     } else if(button == _registrButton){
         BASRegistrationViewController *controller = [BASRegistrationViewController new];
@@ -257,7 +255,7 @@
 }
 #pragma mark - Purchaise
 
--(void)unlockFeature{
+-(void)unlockFeatureForDate:(NSDate*) date {
 
     TheApp;
     [app showIndecator:NO withView:app.window];
@@ -269,15 +267,17 @@
     [defaults removeObjectForKey:@"isPurchaiseDate"];
     [defaults synchronize];
 
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
+    [objDateFormatter setDateFormat:@"dd.MM.yyyy"];
+    NSString* dateStr = [objDateFormatter stringFromDate:date];
     NSNumber* term = nil;
-    NSString* dateStr = [NSString stringWithFormat:@"%ld.%ld.%ld",[components day],[components month],[components year]];
+
     if(curButton == _oneButton){
         term = [NSNumber numberWithInt:1];
-    } else if(curButton == _sixButton){
+    } else if(curButton == _treeButton){
+        term = [NSNumber numberWithInt:3];
+    }else if(curButton == _sixButton){
         term = [NSNumber numberWithInt:6];
-    }else if(curButton == _yearButton){
-        term = [NSNumber numberWithInt:12];
     }
     [defaults setObject:dateStr forKey:@"isPurchaiseDate"];
     [defaults setObject:term forKey:@"isPurchaiseTermin"];
