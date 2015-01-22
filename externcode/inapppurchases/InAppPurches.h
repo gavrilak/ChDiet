@@ -22,7 +22,7 @@
 @protocol InAppPurchesDelegate <NSObject>
 
 @optional
--(void)unlockFeature;
+-(void)unlockFeatureForDate:(NSDate*) date;
 -(void)restoreFeature;
 
 @end
