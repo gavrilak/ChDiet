@@ -150,6 +150,8 @@
 		A5D4D8E11A120D3A00FDEA67 /* register_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */; };
 		A5D4D8E41A120D8D00FDEA67 /* register_bg_6.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */; };
 		A5D4D8E51A120D8D00FDEA67 /* register_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */; };
+		BFCF40B61A8B680700661DFA /* button_restore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCF40B41A8B680700661DFA /* button_restore@2x.png */; };
+		BFCF40B71A8B680700661DFA /* button_restore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCF40B51A8B680700661DFA /* button_restore@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -345,6 +347,8 @@
 		A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@3x.png"; path = "SourceCode/Resource/General/register_bg@3x.png"; sourceTree = SOURCE_ROOT; };
 		A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = register_bg_6.png; path = SourceCode/Resource/General/register_bg_6.png; sourceTree = SOURCE_ROOT; };
 		A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@2x.png"; path = "SourceCode/Resource/General/register_bg@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFCF40B41A8B680700661DFA /* button_restore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_restore@2x.png"; path = "SourceCode/Resource/General/button_restore@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFCF40B51A8B680700661DFA /* button_restore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_restore@3x.png"; path = "SourceCode/Resource/General/button_restore@3x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +457,8 @@
 				A5AB076B1A11101200384F11 /* text_technical_support_6.png */,
 				4C106AD31A446B1F001D5567 /* in_bg_6.png */,
 				4C106AD41A446B1F001D5567 /* in_bg@2x.png */,
+				BFCF40B41A8B680700661DFA /* button_restore@2x.png */,
+				BFCF40B51A8B680700661DFA /* button_restore@3x.png */,
 				4C106AD51A446B1F001D5567 /* in_bg@3x.png */,
 				A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */,
 				A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */,
@@ -844,9 +850,13 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					A5741AA81993563400261E43 = {
+						DevelopmentTeam = UE7X5T289N;
 						TestTargetID = A5741A841993563400261E43;
 					};
 				};
@@ -902,6 +912,7 @@
 				A595A9761A08F14A00EB02E2 /* Icon-76.png in Resources */,
 				A595A94C1A08F11600EB02E2 /* button_sign_up@2x.png in Resources */,
 				A595A9481A08F11600EB02E2 /* button_sign_in@2x.png in Resources */,
+				BFCF40B61A8B680700661DFA /* button_restore@2x.png in Resources */,
 				A595A94E1A08F11600EB02E2 /* cell@3x.png in Resources */,
 				A595A97C1A08F14A00EB02E2 /* Icon-Small-50@2x.png in Resources */,
 				32EECF501A714F3600FEF887 /* button_899@2x.png in Resources */,
@@ -925,6 +936,7 @@
 				A595A9721A08F14A00EB02E2 /* Icon-60@2x.png in Resources */,
 				4C106AE81A45D58A001D5567 /* text_technical_support@3x.png in Resources */,
 				4C257A441A43B528001F8511 /* text_technical_support_5@3x.png in Resources */,
+				BFCF40B71A8B680700661DFA /* button_restore@3x.png in Resources */,
 				A5D4D8E11A120D3A00FDEA67 /* register_bg@3x.png in Resources */,
 				A595A9BB1A090AF300EB02E2 /* Default-6+@3x.png in Resources */,
 				A5AB076C1A11101200384F11 /* text_technical_support_6.png in Resources */,
@@ -1087,6 +1099,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "1007f1eb-b5f5-429e-a3a4-b73d24627c62";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1119,6 +1132,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PROVISIONING_PROFILE = "1007f1eb-b5f5-429e-a3a4-b73d24627c62";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1193,6 +1207,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OfigennoParser.app/OfigennoParser";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1206,6 +1222,7 @@
 				);
 				INFOPLIST_FILE = "OfigennoParserTests/OfigennoParserTests-Info.plist";
 				PRODUCT_NAME = chatdietologTests;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1215,6 +1232,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OfigennoParser.app/OfigennoParser";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1224,6 +1243,7 @@
 				GCC_PREFIX_HEADER = "OfigennoParser/OfigennoParser-Prefix.pch";
 				INFOPLIST_FILE = "OfigennoParserTests/OfigennoParserTests-Info.plist";
 				PRODUCT_NAME = chatdietologTests;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

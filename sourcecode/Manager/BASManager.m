@@ -101,10 +101,37 @@
 -(void)closeSocket{
     [_webSocket close];
 }
+
+-(void)Restore{
+    TheApp;
+    __block NSDictionary* param = @{
+                                    @"login" :app.login
+                                    };
+    [self getData:[[BASManager sharedInstance] formatRequest:@"RESETPASSWORD" withParam:param] success:^(NSDictionary* responseObject) {
+        if([responseObject isKindOfClass:[NSDictionary class]]){
+            [app showIndecator:NO withView:app.window];
+            NSNumber* result =(NSNumber*)[[[responseObject objectForKey:@"param"]objectAtIndex:0]objectForKey:@"result"];
+            NSLog(@"%@",responseObject);
+            if([result integerValue] == 0){
+                [self showAlertViewWithMess:@"Неверно указан e-mail адрес"];
+            }
+            else{
+                [self showAlertViewWithMess:@"Ваш новый пароль успешно выслан на указанный e-mail адрес"];
+            }
+        }
+     }failure:^(NSString *error) {
+        NSLog(@"%@",error);
+        [app showIndecator:NO withView:app.window];
+    }];
+}
 - (void)LogIn{
     
     TheApp;
-    
+    #if USE_ICLOUD_STORAGE
+        NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+    #else
+        NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+    #endif
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
     [objDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *timezone = [objDateFormatter stringFromDate:[NSDate date]];
@@ -119,13 +146,20 @@
                                           };
             [self getData: [[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param]success:^(NSDictionary *responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                   // NSLog(@"%@",responseObject);
+                    NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                    [userDefaults synchronize];
+                    NSNumber* isPurches =(NSNumber*) [ dict objectForKey:@"isPurches"];
+                    if ([isPurches integerValue] == 1)
+                        app.isPurchaise = YES ;
+                    else
+                        app.isPurchaise = NO;
+                    [storage setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                    [storage setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                    [storage setBool:app.isPurchaise forKey:@"isPurchaise"];
+                    [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                    [storage synchronize];
                     [self checkPurshes];
                   
                 }
@@ -155,16 +189,19 @@
                         }
                         return;
                     }
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    [userDefaults removeObjectForKey:@""];
-                    [userDefaults removeObjectForKey:@""];
-                    [userDefaults removeObjectForKey:@""];
-                    [userDefaults synchronize];
-                    [userDefaults setObject:app.login forKey:@"login"];
-                    [userDefaults setObject:app.pass forKey:@"password"];
-                    [userDefaults setObject:app.userInfo forKey:@"userInfo"];
-                    [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                    [userDefaults synchronize];
+                    NSNumber* isPurches =(NSNumber*) [ dict objectForKey:@"isPurches"];
+                    if ([isPurches integerValue] == 1)
+                        app.isPurchaise = YES ;
+                    else
+                        app.isPurchaise = NO;
+                    [storage setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                    [storage setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                    [storage setBool:app.isPurchaise forKey:@"isPurchaise"];
+                    [storage setObject:app.login forKey:@"login"];
+                    [storage setObject:app.pass forKey:@"password"];
+                    [storage setObject:app.userInfo forKey:@"userInfo"];
+                    [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                    [storage synchronize];
                     app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                     app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                     [self checkPurshes];
@@ -214,16 +251,19 @@
                                                                    return ;
                                                                } else{
                                                                    app.userInfo = (NSDictionary*)[userInfo objectAtIndex:0];
-                                                                   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                                   [userDefaults removeObjectForKey:@""];
-                                                                    [userDefaults removeObjectForKey:@""];
-                                                                    [userDefaults removeObjectForKey:@""];
-                                                                   [userDefaults synchronize];
-                                                                   [userDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
-                                                                   [userDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
-                                                                   [userDefaults setObject:app.userInfo forKey:@"userInfo"];
-                                                                   [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                                                                   [userDefaults synchronize];
+                                                                   NSNumber* isPurches =(NSNumber*) [ dict objectForKey:@"isPurches"];
+                                                                   if ([isPurches integerValue] == 1)
+                                                                       app.isPurchaise = YES ;
+                                                                   else
+                                                                       app.isPurchaise = NO;
+                                                                   [storage setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                                                                   [storage setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                                                                   [storage setBool:app.isPurchaise forKey:@"isPurchaise"];
+                                                                   [storage setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
+                                                                   [storage setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
+                                                                   [storage setObject:app.userInfo forKey:@"userInfo"];
+                                                                   [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                                                                   [storage synchronize];
                                                                    app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                                                                    app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                                                          
@@ -256,41 +296,73 @@
 
 -(void) checkPurshes {
     TheApp;
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString* date = (NSString*)[userDefaults objectForKey:@"isPurchaiseDate"];
-    NSNumber* term = (NSNumber*)[userDefaults objectForKey:@"isPurchaiseTermin"];
-    NSDictionary* param = @{
+    #if USE_ICLOUD_STORAGE
+        NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+    #else
+        NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+    #endif
+    NSString* date = (NSString*)[storage objectForKey:@"isPurchaiseDate"];
+    NSNumber* term = (NSNumber*)[storage objectForKey:@"isPurchaiseTermin"];
+    app.isLogin = YES;
+    NSDictionary* param;
+    if (date!=nil && term !=nil){
+                    param = @{
                             @"date" :date,
                             @"term" : term
                             };
-
+        }
     [self getData:[[BASManager sharedInstance] formatRequest:@"SETPURCHES" withParam:param] success:^(NSDictionary* responseObject) {
-        // NSLog(@"%@",responseObject);
-        NSNumber* isPurches = (NSNumber*)[[[responseObject objectForKey:@"param"]objectAtIndex:0]objectForKey:@"isPurches"];
-        
-        if([isPurches integerValue] == 0){
-            [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults removeObjectForKey:@"isPurchaise"];
-            [defaults removeObjectForKey:@"isPurchaiseTermin"];
-            [defaults removeObjectForKey:@"isPurchaiseDate"];
-            [defaults synchronize];
-            app.isPurchaise = NO;
-            app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
-            [app.window setRootViewController:app.navigationController];
-        } else {
+         NSLog(@"%@",responseObject);
+        NSNumber* isPurches = [app.userInfo objectForKey:@"isPurches"];
+        if ([isPurches integerValue] >= 0 || [term integerValue] != 0) {
+            isPurches =(NSNumber*)[[[responseObject objectForKey:@"param"]objectAtIndex:0]objectForKey:@"isPurches"];
+        }
+       
+        switch ([isPurches integerValue])
+        {
+      
+                
+            case -1:
+            {
+                [storage removeObjectForKey:@"isPurchaise"];
+                [storage removeObjectForKey:@"isPurchaiseTermin"];
+                [storage removeObjectForKey:@"isPurchaiseDate"];
+                [storage synchronize];
+                app.isPurchaise = NO;
+                app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+                [app.window setRootViewController:app.navigationController];
+                break;
+            }
+            case 0:
+            {
             
-            NSDictionary* param = @{
+                [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
+                [storage removeObjectForKey:@"isPurchaise"];
+                [storage removeObjectForKey:@"isPurchaiseTermin"];
+                [storage removeObjectForKey:@"isPurchaiseDate"];
+                [storage synchronize];
+                app.isPurchaise = NO;
+                app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+                [app.window setRootViewController:app.navigationController];
+                break;
+            }
+            case 1:
+            {
+            
+                app.isPurchaise = YES;
+                NSDictionary* param = @{
                                     @"push_token" :app.pushToken,
                                     };
-            [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
+                [self getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
                 //  NSLog(@"%@",responseObject);
                 app.chatController = [[BASChatViewController alloc]init];
                 app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
                 [app.window setRootViewController:app.navigationController];
-            }failure:^(NSString *error) {
-                NSLog(@"%@",error);
-            }];
+                }failure:^(NSString *error) {
+                    NSLog(@"%@",error);
+                }];
+                break;
+            }
         }
         
     }failure:^(NSString *error) {
@@ -422,4 +494,7 @@
     }
     return str;
 }
+
+
+
 @end

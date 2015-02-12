@@ -220,20 +220,28 @@ static MKStoreManager* _sharedStoreManager; // self
 
 +(void) loadPurchases 
 {
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];	
-	feature1Purchased = [userDefaults boolForKey:feature1Id];
-	feature2Purchased = [userDefaults boolForKey:feature2Id];
-    feature3Purchased = [userDefaults boolForKey:feature3Id];
+#if USE_ICLOUD_STORAGE
+    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+#else
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+#endif
+	feature1Purchased = [storage boolForKey:feature1Id];
+	feature2Purchased = [storage boolForKey:feature2Id];
+    feature3Purchased = [storage boolForKey:feature3Id];
 
 }
 
 
 +(void) updatePurchases
 {
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	[userDefaults setBool:feature1Purchased forKey:feature1Id];
-	[userDefaults setBool:feature2Purchased forKey:feature2Id];
-    [userDefaults setBool:feature3Purchased forKey:feature3Id];
+#if USE_ICLOUD_STORAGE
+    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+#else
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+#endif
+	[storage setBool:feature1Purchased forKey:feature1Id];
+	[storage setBool:feature2Purchased forKey:feature2Id];
+    [storage setBool:feature3Purchased forKey:feature3Id];
 
 }
 @end

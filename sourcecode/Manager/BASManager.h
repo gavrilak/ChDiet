@@ -43,7 +43,8 @@ typedef enum{
 
 - (void)initSocket;
 - (void)initLocationManager;
-
+- (void)checkPurshes;
+- (void)Restore;
 - (void)LogIn;
 - (void)LogOut;
 - (void)resetWebSocket;

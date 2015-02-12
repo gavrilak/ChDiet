@@ -264,6 +264,11 @@
                             @"country" :((UITextField*)[_textFields objectAtIndex:3]).text,
                             @"city" :((UITextField*)[_textFields objectAtIndex:4]).text,
                             };
+#if USE_ICLOUD_STORAGE
+    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+#else
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+#endif
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
             NSLog(@"%@",responseObject);
@@ -275,47 +280,13 @@
                 return ;
             } else{
                 app.userInfo = (NSDictionary*)[userInfo objectAtIndex:0];
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults removeObjectForKey:@""];
-                [userDefaults removeObjectForKey:@""];
-                [userDefaults removeObjectForKey:@""];
-                [userDefaults synchronize];
-                [userDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
-                [userDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
-                [userDefaults setObject:app.userInfo forKey:@"userInfo"];
-                [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                [userDefaults synchronize];
+                [storage setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
+                [storage setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
+                [storage setObject:app.userInfo forKey:@"userInfo"];
+                [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                [storage synchronize];
                 
- 
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                NSString* date = (NSString*)[defaults objectForKey:@"isPurchaiseDate"];
-                NSNumber* term = (NSNumber*)[defaults objectForKey:@"isPurchaiseTermin"];
-                NSDictionary* param = @{
-                                        @"date" :date,
-                                        @"term" : term
-                                        };
-                [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SETPURCHES" withParam:param] success:^(NSDictionary* responseObject) {
-                    NSLog(@"%@",responseObject);
-                    NSDictionary *param = @{
-                              @"push_token" :app.pushToken,
-                              };
-                    [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SETPUSHTOKEN" withParam:param] success:^(NSDictionary* responseObject) {
-                        NSLog(@"%@",responseObject);
-                        app.chatController = [[BASChatViewController alloc]init];
-                        app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.chatController];
-                        [app.window setRootViewController:app.navigationController];
-                    }failure:^(NSString *error) {
-                        NSLog(@"%@",error);
-                    }];
-                   
-                }failure:^(NSString *error) {
-                    NSLog(@"%@",error);
-                }];
-                
-                
-
-                
-
+                [[BASManager sharedInstance] checkPurshes];
             }
             
         }

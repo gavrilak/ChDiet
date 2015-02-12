@@ -13,7 +13,7 @@
 @property (nonatomic, strong) UITextField* passView;
 @end
 
-@implementation BASInputViewController
+@implementation BASInputViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -99,6 +99,17 @@
     [button setFrame:CGRectMake(self.view.bounds.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
     [button addTarget:self action:@selector(clicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
+    
+   image = [UIImage imageNamed:@"button_restore.png"];
+    if(!IS_IPHONE_5)
+        image = [UIImage imageNamed:@"button_restore@3x.png"];
+    
+    UIButton* buttonRestore = [UIButton buttonWithType:UIButtonTypeCustom];
+    [buttonRestore setBackgroundColor:[UIColor clearColor]];
+    [buttonRestore setBackgroundImage:image forState:UIControlStateNormal];
+    [buttonRestore setFrame:CGRectMake(self.view.bounds.size.width / 2 - image.size.width / 2, self.view.bounds.size.height -130 , image.size.width, image.size.height)];
+    [buttonRestore addTarget:self action:@selector(restore) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonRestore];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -115,8 +126,22 @@
 - (void)viewWillDisappear:(BOOL)animated{
 
     [super viewWillDisappear:animated];
+
+}
+
+- (void)restore{
+    
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Введите ваш e-mail адрес " message:nil delegate:self cancelButtonTitle:@"Отмена" otherButtonTitles:@"Готово",nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertView.tag = 101;
+    [alertView textFieldAtIndex:0].keyboardAppearance = UIKeyboardAppearanceDark;
+   // [alertView textFieldAtIndex:0].delegate = self;
+    [alertView show];
+    
+  //  [[BASManager sharedInstance]Restore];
     
 }
+
 - (void)clicked{
     TheApp;
     app.loginType = LOCAL;
@@ -166,5 +191,17 @@
   
     return YES;
 }
-
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    TheApp;
+    switch (alertView.tag) {
+        case 101:
+            if (buttonIndex == 1) {
+                UITextField *textfield = [alertView textFieldAtIndex:0];
+                app.login = textfield.text;
+                 [app showIndecator:YES withView:app.window];
+                [[BASManager sharedInstance]Restore];
+            }
+    }
+}
 @end

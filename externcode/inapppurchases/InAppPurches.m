@@ -45,7 +45,7 @@
 - (void)buyProduct{
 
     //self.payment = [SKPayment paymentWithProductIdentifier:_productID];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Данная услуга платная, желаете купить ее?" delegate:self cancelButtonTitle:@"Отменить" otherButtonTitles:@"Купить", @"Восстановить покупки", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Данная услуга платная, желаете купить ее?" delegate:self cancelButtonTitle:@"Отменить" otherButtonTitles:@"Купить", nil];
     //	alertView.tag = kInAppPurchasesAlertViewTag;
     [alertView show];
     
@@ -59,8 +59,8 @@
         if (buttonIndex == 1) { //purchase in app
             self.payment = [SKPayment paymentWithProduct:_product];
             [[SKPaymentQueue defaultQueue] addPayment:_payment];
-        } else { //restore purchases
-            [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+      //  } else { //restore purchases
+       //     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
         }
     }
     else{

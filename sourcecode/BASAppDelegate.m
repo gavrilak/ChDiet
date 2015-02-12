@@ -52,13 +52,17 @@
     
     [[BASManager sharedInstance]initSocket];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    self.isPurchaise = (BOOL)[userDefaults objectForKey:@"isPurchaise"];
+#if USE_ICLOUD_STORAGE
+    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+#else
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+#endif
+    self.isPurchaise = (BOOL)[storage objectForKey:@"isPurchaise"];
     //self.isPurchaise = YES;
-    self.login = [userDefaults objectForKey:@"login"];
-    self.pass = [userDefaults objectForKey:@"password"];
-    self.userInfo = [userDefaults objectForKey:@"userInfo"];
-    NSNumber* logType = (NSNumber*)[userDefaults objectForKey:@"loginType"];
+    self.login = [storage objectForKey:@"login"];
+    self.pass = [storage objectForKey:@"password"];
+    self.userInfo = [storage objectForKey:@"userInfo"];
+    NSNumber* logType = (NSNumber*)[storage objectForKey:@"loginType"];
     self.loginType = (TypeLogin)[logType intValue];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

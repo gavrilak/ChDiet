@@ -99,67 +99,44 @@
     CGFloat posY = _infoView.frame.origin.y + _infoView.frame.size.height + 10.f ;
 
     
-    if(app.tabView.tabIndex == 1 || app.isPurchaise){
+    if(app.tabView.tabIndex == 1 || app.isLogin){
 
-        if(app.isPurchaise){
+        if(!app.isPurchaise && app.tabView.tabIndex != 1 ){
             
-            if(app.tabView.tabIndex == 1){
-                image = [UIImage imageNamed:@"text_technical_support.png"];
-                if(IS_IPHONE_6)
-                    image = [UIImage imageNamed:@"text_technical_support_6.png"];
-            } else {
-                image = [UIImage imageNamed:@"text_nutritionist.png"];
-                if(IS_IPHONE_6)
-                    image = [UIImage imageNamed:@"text_nutritionist_6.png"];
-            }
-            [_infoView setImage:image];
-            image = [UIImage imageNamed:@"button_sign_in.png"];
+            posY += 10.f ;
+            image = [UIImage imageNamed:@"button_899.png"];
             if(!IS_IPHONE_5)
-                image = [UIImage imageNamed:@"button_sign_in@3x.png"];
-            self.inButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [_inButton setBackgroundColor:[UIColor clearColor]];
-            [_inButton setBackgroundImage:image forState:UIControlStateNormal];
-            [_inButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-            [_inButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-            [_scrollview addSubview:_inButton];
+                image = [UIImage imageNamed:@"button_899@3x.png"];
+            self.oneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_oneButton setBackgroundColor:[UIColor clearColor]];
+            [_oneButton setBackgroundImage:image forState:UIControlStateNormal];
+            [_oneButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+            [_oneButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_scrollview addSubview:_oneButton];
             
-            posY += (_inButton.frame.size.height );
-            
-            image = [UIImage imageNamed:@"button_guest_in.png"];
+            posY += (_oneButton.frame.size.height + 10.f);
+            image = [UIImage imageNamed:@"button_2390.png"];
             if(!IS_IPHONE_5)
-                image = [UIImage imageNamed:@"button_guest_in@3x.png"];
-            self.guestButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [_guestButton setBackgroundColor:[UIColor clearColor]];
-            [_guestButton setBackgroundImage:image forState:UIControlStateNormal];
-            [_guestButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-            [_guestButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-            [_scrollview addSubview:_guestButton];
+                image = [UIImage imageNamed:@"button_2390@3x.png"];
+            self.treeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_treeButton setBackgroundColor:[UIColor clearColor]];
+            [_treeButton setBackgroundImage:image forState:UIControlStateNormal];
+            [_treeButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+            [_treeButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_scrollview addSubview:_treeButton];
             
-            posY += (_inButton.frame.size.height );
+            posY += (_treeButton.frame.size.height + 10.f);
             
-            image = [UIImage imageNamed:@"button_sign_in_fb.png"];
+            image = [UIImage imageNamed:@"button_4290.png"];
             if(!IS_IPHONE_5)
-                image = [UIImage imageNamed:@"button_sign_in_fb@3x.png"];
-            self.fbButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [_fbButton setBackgroundColor:[UIColor clearColor]];
-          
-            [_fbButton setBackgroundImage:image forState:UIControlStateNormal];
-            [_fbButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-            [_fbButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-            [_scrollview addSubview:_fbButton];
-            
-            posY += (_fbButton.frame.size.height );
-            
-            image = [UIImage imageNamed:@"button_register.png"];
-            if(!IS_IPHONE_5)
-                image = [UIImage imageNamed:@"button_register@3x.png"];
-            self.registrButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [_registrButton setBackgroundColor:[UIColor clearColor]];
-            [_registrButton setBackgroundImage:image forState:UIControlStateNormal];
-            [_registrButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-            [_registrButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-            [_scrollview addSubview:_registrButton];
-            posY += (_registrButton.frame.size.height );
+                image = [UIImage imageNamed:@"button_4290@3x.png"];
+            self.sixButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [_sixButton setBackgroundColor:[UIColor clearColor]];
+            [_sixButton setBackgroundImage:image forState:UIControlStateNormal];
+            [_sixButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+            [_sixButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_scrollview addSubview:_sixButton];
+            posY += (_sixButton.frame.size.height + 15.f);
             
         } else{
             image = [UIImage imageNamed:@"bg_support.png"];
@@ -174,41 +151,65 @@
         
 
     } else {
-        
-        posY += 10.f ;
-        image = [UIImage imageNamed:@"button_899.png"];
+        if(app.tabView.tabIndex == 1){
+            image = [UIImage imageNamed:@"text_technical_support.png"];
+            if(IS_IPHONE_6)
+                image = [UIImage imageNamed:@"text_technical_support_6.png"];
+        } else {
+            image = [UIImage imageNamed:@"text_nutritionist.png"];
+            if(IS_IPHONE_6)
+                image = [UIImage imageNamed:@"text_nutritionist_6.png"];
+        }
+        [_infoView setImage:image];
+        image = [UIImage imageNamed:@"button_sign_in.png"];
         if(!IS_IPHONE_5)
-            image = [UIImage imageNamed:@"button_899@3x.png"];
-        self.oneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_oneButton setBackgroundColor:[UIColor clearColor]];
-        [_oneButton setBackgroundImage:image forState:UIControlStateNormal];
-        [_oneButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-        [_oneButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollview addSubview:_oneButton];
-       
-        posY += (_oneButton.frame.size.height + 10.f);
-        image = [UIImage imageNamed:@"button_2390.png"];
-        if(!IS_IPHONE_5)
-            image = [UIImage imageNamed:@"button_2390@3x.png"];
-        self.treeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_treeButton setBackgroundColor:[UIColor clearColor]];
-        [_treeButton setBackgroundImage:image forState:UIControlStateNormal];
-        [_treeButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-        [_treeButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollview addSubview:_treeButton];
+            image = [UIImage imageNamed:@"button_sign_in@3x.png"];
+        self.inButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_inButton setBackgroundColor:[UIColor clearColor]];
+        [_inButton setBackgroundImage:image forState:UIControlStateNormal];
+        [_inButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+        [_inButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollview addSubview:_inButton];
         
-        posY += (_treeButton.frame.size.height + 10.f);
+        posY += (_inButton.frame.size.height );
         
-        image = [UIImage imageNamed:@"button_4290.png"];
+        image = [UIImage imageNamed:@"button_guest_in.png"];
         if(!IS_IPHONE_5)
-            image = [UIImage imageNamed:@"button_4290@3x.png"];
-        self.sixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_sixButton setBackgroundColor:[UIColor clearColor]];
-        [_sixButton setBackgroundImage:image forState:UIControlStateNormal];
-        [_sixButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
-        [_sixButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollview addSubview:_sixButton];
-        posY += (_sixButton.frame.size.height + 15.f);
+            image = [UIImage imageNamed:@"button_guest_in@3x.png"];
+        self.guestButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_guestButton setBackgroundColor:[UIColor clearColor]];
+        [_guestButton setBackgroundImage:image forState:UIControlStateNormal];
+        [_guestButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+        [_guestButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollview addSubview:_guestButton];
+        
+        posY += (_inButton.frame.size.height );
+        
+        image = [UIImage imageNamed:@"button_sign_in_fb.png"];
+        if(!IS_IPHONE_5)
+            image = [UIImage imageNamed:@"button_sign_in_fb@3x.png"];
+        self.fbButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_fbButton setBackgroundColor:[UIColor clearColor]];
+        
+        [_fbButton setBackgroundImage:image forState:UIControlStateNormal];
+        [_fbButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+        [_fbButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollview addSubview:_fbButton];
+        
+        posY += (_fbButton.frame.size.height );
+        
+        image = [UIImage imageNamed:@"button_register.png"];
+        if(!IS_IPHONE_5)
+            image = [UIImage imageNamed:@"button_register@3x.png"];
+        self.registrButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_registrButton setBackgroundColor:[UIColor clearColor]];
+        [_registrButton setBackgroundImage:image forState:UIControlStateNormal];
+        [_registrButton setFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, posY, image.size.width, image.size.height)];
+        [_registrButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollview addSubview:_registrButton];
+        posY += (_registrButton.frame.size.height );
+        
+        
 
     }
     
@@ -259,13 +260,16 @@
 
     TheApp;
     [app showIndecator:NO withView:app.window];
+#if USE_ICLOUD_STORAGE
+    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+#else
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+#endif
     
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"isPurchaise"];
-    [defaults removeObjectForKey:@"isPurchaiseTermin"];
-    [defaults removeObjectForKey:@"isPurchaiseDate"];
-    [defaults synchronize];
+    [storage removeObjectForKey:@"isPurchaise"];
+    [storage removeObjectForKey:@"isPurchaiseTermin"];
+    [storage removeObjectForKey:@"isPurchaiseDate"];
+    [storage synchronize];
 
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
     [objDateFormatter setDateFormat:@"dd.MM.yyyy"];
@@ -279,14 +283,16 @@
     }else if(curButton == _sixButton){
         term = [NSNumber numberWithInt:6];
     }
-    [defaults setObject:dateStr forKey:@"isPurchaiseDate"];
-    [defaults setObject:term forKey:@"isPurchaiseTermin"];
-    [defaults setBool:YES forKey:@"isPurchaise"];
-    [defaults synchronize];
+    [storage setObject:dateStr forKey:@"isPurchaiseDate"];
+    [storage setObject:term forKey:@"isPurchaiseTermin"];
+    [storage setBool:YES forKey:@"isPurchaise"];
+    [storage synchronize];
     app.isPurchaise = YES;
-
-    [self prepareView];
+    app.isLogin = YES;
     
+    [[BASManager sharedInstance] checkPurshes];
+ 
+     [self prepareView];
     //UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Сообщение" message:@"Ваши покупки успешно завершены" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     //[alert show];
     

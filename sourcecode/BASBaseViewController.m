@@ -39,7 +39,7 @@
 # pragma  mark -  Private methods
 - (void)setupNavBtn:(NavBarType)type
 {
-
+    TheApp;
     UIButton *btn = nil;
     UIImage *btnImg  = nil;
     UIBarButtonItem *barBtnItem = nil;
@@ -72,6 +72,19 @@
             
             break;
         case MENUTYPE:
+            if (app.isLogin){
+                btnImg = [UIImage imageNamed:@"output.png"];
+                btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                btn.frame = CGRectMake(0.f, 0.f, btnImg.size.width, btnImg.size.height);
+                [btn setImage:btnImg forState:UIControlStateNormal];
+                [btn addTarget:self action:@selector(btnMenuPressed) forControlEvents:UIControlEventTouchUpInside];
+           
+                barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+                self.navigationItem.leftBarButtonItem = barBtnItem;
+            }
+            else{
+                self.navigationItem.leftBarButtonItem = nil;
+            }
             btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btnImg = [UIImage imageNamed:@"info.png"];
             btn.frame = CGRectMake(0.f, 0.f, btnImg.size.width, btnImg.size.height);
@@ -167,17 +180,21 @@
 }
 - (void)btnMenuPressed{
     TheApp;
-    
+#if USE_ICLOUD_STORAGE
+    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
+#else
+    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
+#endif
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"LOGOUT" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
            // NSLog(@"%@",responseObject);
             if (FBSession.activeSession.state == FBSessionStateOpen)
                 [FBSession.activeSession closeAndClearTokenInformation];
             
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults removeObjectForKey:@"login"];
-            [userDefaults removeObjectForKey:@"password"];
-            [userDefaults synchronize];
+            [storage removeObjectForKey:@"login"];
+            [storage removeObjectForKey:@"password"];
+            [storage synchronize];
+            app.isLogin = NO;
             app.navigationController = nil;
             app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
             [app.window setRootViewController:app.navigationController];

@@ -8,6 +8,6 @@
 
 #import "BASBaseViewController.h"
 
-@interface BASInputViewController : BASBaseViewController
+@interface BASInputViewController : BASBaseViewController <UIAlertViewDelegate>
 
 @end

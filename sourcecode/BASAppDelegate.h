@@ -31,9 +31,9 @@ typedef enum messageType {
 
 static CGFloat hight;
 static NSString *restorefeatureId = @"restoreCompletedTransactions";
-static NSString *feature1Id = @"com.bestappstudio.Chat_11";
-static NSString *feature2Id = @"com.bestappstudio.Chat_22";
-static NSString *feature3Id = @"com.bestappstudio.Chat_33";
+static NSString *feature1Id = @"11111";// @"com.bestappstudio.Chat_11";
+static NSString *feature2Id = @"22222";//@"com.bestappstudio.Chat_22";
+static NSString *feature3Id = @"33333";//@"com.bestappstudio.Chat_33";
 
 @interface BASAppDelegate : UIResponder <UIApplicationDelegate>
 
