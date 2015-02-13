@@ -264,14 +264,10 @@
                             @"country" :((UITextField*)[_textFields objectAtIndex:3]).text,
                             @"city" :((UITextField*)[_textFields objectAtIndex:4]).text,
                             };
-#if USE_ICLOUD_STORAGE
-    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
-#else
-    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-#endif
+
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-            NSLog(@"%@",responseObject);
+          //  NSLog(@"%@",responseObject);
             NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
             NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
             
@@ -280,11 +276,11 @@
                 return ;
             } else{
                 app.userInfo = (NSDictionary*)[userInfo objectAtIndex:0];
-                [storage setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
-                [storage setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
-                [storage setObject:app.userInfo forKey:@"userInfo"];
-                [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                [storage synchronize];
+                [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
+                [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
+                [SDCloudUserDefaults setObject:app.userInfo forKey:@"userInfo"];
+                [SDCloudUserDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                [SDCloudUserDefaults synchronize];
                 
                 [[BASManager sharedInstance] checkPurshes];
             }

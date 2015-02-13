@@ -111,7 +111,7 @@
         if([responseObject isKindOfClass:[NSDictionary class]]){
             [app showIndecator:NO withView:app.window];
             NSNumber* result =(NSNumber*)[[[responseObject objectForKey:@"param"]objectAtIndex:0]objectForKey:@"result"];
-            NSLog(@"%@",responseObject);
+            //NSLog(@"%@",responseObject);
             if([result integerValue] == 0){
                 [self showAlertViewWithMess:@"Неверно указан e-mail адрес"];
             }
@@ -127,11 +127,8 @@
 - (void)LogIn{
     
     TheApp;
-    #if USE_ICLOUD_STORAGE
-        NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
-    #else
-        NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-    #endif
+ 
+  
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
     [objDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *timezone = [objDateFormatter stringFromDate:[NSDate date]];
@@ -146,7 +143,7 @@
                                           };
             [self getData: [[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param]success:^(NSDictionary *responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                    NSLog(@"%@",responseObject);
+                   // NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
@@ -155,11 +152,11 @@
                         app.isPurchaise = YES ;
                     else
                         app.isPurchaise = NO;
-                    [storage setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
-                    [storage setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
-                    [storage setBool:app.isPurchaise forKey:@"isPurchaise"];
-                    [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                    [storage synchronize];
+                    [SDCloudUserDefaults setString:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                    [SDCloudUserDefaults setString:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                    [SDCloudUserDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
+                    [SDCloudUserDefaults setInteger:app.loginType forKey:@"loginType"];
+                    [SDCloudUserDefaults synchronize];
                     [self checkPurshes];
                   
                 }
@@ -194,14 +191,14 @@
                         app.isPurchaise = YES ;
                     else
                         app.isPurchaise = NO;
-                    [storage setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
-                    [storage setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
-                    [storage setBool:app.isPurchaise forKey:@"isPurchaise"];
-                    [storage setObject:app.login forKey:@"login"];
-                    [storage setObject:app.pass forKey:@"password"];
-                    [storage setObject:app.userInfo forKey:@"userInfo"];
-                    [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                    [storage synchronize];
+                    [SDCloudUserDefaults setString:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                    [SDCloudUserDefaults setString:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                    [SDCloudUserDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
+                    [SDCloudUserDefaults setString:app.login forKey:@"login"];
+                    [SDCloudUserDefaults setString:app.pass forKey:@"password"];
+                    [SDCloudUserDefaults setObject:app.userInfo forKey:@"userInfo"];
+                    [SDCloudUserDefaults setInteger: app.loginType forKey:@"loginType"];
+                    [SDCloudUserDefaults synchronize];
                     app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                     app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                     [self checkPurshes];
@@ -256,14 +253,14 @@
                                                                        app.isPurchaise = YES ;
                                                                    else
                                                                        app.isPurchaise = NO;
-                                                                   [storage setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
-                                                                   [storage setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
-                                                                   [storage setBool:app.isPurchaise forKey:@"isPurchaise"];
-                                                                   [storage setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
-                                                                   [storage setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
-                                                                   [storage setObject:app.userInfo forKey:@"userInfo"];
-                                                                   [storage setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                                                                   [storage synchronize];
+                                                                   [SDCloudUserDefaults setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                                                                   [SDCloudUserDefaults setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                                                                   [SDCloudUserDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
+                                                                   [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
+                                                                   [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
+                                                                   [SDCloudUserDefaults setObject:app.userInfo forKey:@"userInfo"];
+                                                                   [SDCloudUserDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                                                                   [SDCloudUserDefaults synchronize];
                                                                    app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                                                                    app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                                                          
@@ -296,13 +293,9 @@
 
 -(void) checkPurshes {
     TheApp;
-    #if USE_ICLOUD_STORAGE
-        NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
-    #else
-        NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-    #endif
-    NSString* date = (NSString*)[storage objectForKey:@"isPurchaiseDate"];
-    NSNumber* term = (NSNumber*)[storage objectForKey:@"isPurchaiseTermin"];
+
+    NSString* date = (NSString*)[SDCloudUserDefaults objectForKey:@"isPurchaiseDate"];
+    NSNumber* term = (NSNumber*)[SDCloudUserDefaults objectForKey:@"isPurchaiseTermin"];
     app.isLogin = YES;
     NSDictionary* param;
     if (date!=nil && term !=nil){
@@ -312,7 +305,7 @@
                             };
         }
     [self getData:[[BASManager sharedInstance] formatRequest:@"SETPURCHES" withParam:param] success:^(NSDictionary* responseObject) {
-         NSLog(@"%@",responseObject);
+         //NSLog(@"%@",responseObject);
         NSNumber* isPurches = [app.userInfo objectForKey:@"isPurches"];
         if ([isPurches integerValue] >= 0 || [term integerValue] != 0) {
             isPurches =(NSNumber*)[[[responseObject objectForKey:@"param"]objectAtIndex:0]objectForKey:@"isPurches"];
@@ -324,10 +317,10 @@
                 
             case -1:
             {
-                [storage removeObjectForKey:@"isPurchaise"];
-                [storage removeObjectForKey:@"isPurchaiseTermin"];
-                [storage removeObjectForKey:@"isPurchaiseDate"];
-                [storage synchronize];
+                [SDCloudUserDefaults removeObjectForKey:@"isPurchaise"];
+                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseTermin"];
+                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseDate"];
+                [SDCloudUserDefaults synchronize];
                 app.isPurchaise = NO;
                 app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
                 [app.window setRootViewController:app.navigationController];
@@ -337,10 +330,10 @@
             {
             
                 [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
-                [storage removeObjectForKey:@"isPurchaise"];
-                [storage removeObjectForKey:@"isPurchaiseTermin"];
-                [storage removeObjectForKey:@"isPurchaiseDate"];
-                [storage synchronize];
+                [SDCloudUserDefaults removeObjectForKey:@"isPurchaise"];
+                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseTermin"];
+                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseDate"];
+                [SDCloudUserDefaults synchronize];
                 app.isPurchaise = NO;
                 app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
                 [app.window setRootViewController:app.navigationController];
@@ -370,6 +363,8 @@
     }];
 
 }
+
+
 
 - (void)LogOut{
    

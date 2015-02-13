@@ -260,16 +260,12 @@
 
     TheApp;
     [app showIndecator:NO withView:app.window];
-#if USE_ICLOUD_STORAGE
-    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
-#else
-    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-#endif
+
     
-    [storage removeObjectForKey:@"isPurchaise"];
-    [storage removeObjectForKey:@"isPurchaiseTermin"];
-    [storage removeObjectForKey:@"isPurchaiseDate"];
-    [storage synchronize];
+    [SDCloudUserDefaults removeObjectForKey:@"isPurchaise"];
+    [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseTermin"];
+    [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseDate"];
+    [SDCloudUserDefaults synchronize];
 
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
     [objDateFormatter setDateFormat:@"dd.MM.yyyy"];
@@ -283,10 +279,10 @@
     }else if(curButton == _sixButton){
         term = [NSNumber numberWithInt:6];
     }
-    [storage setObject:dateStr forKey:@"isPurchaiseDate"];
-    [storage setObject:term forKey:@"isPurchaiseTermin"];
-    [storage setBool:YES forKey:@"isPurchaise"];
-    [storage synchronize];
+    [SDCloudUserDefaults setObject:dateStr forKey:@"isPurchaiseDate"];
+    [SDCloudUserDefaults setObject:term forKey:@"isPurchaiseTermin"];
+    [SDCloudUserDefaults setBool:YES forKey:@"isPurchaise"];
+    [SDCloudUserDefaults synchronize];
     app.isPurchaise = YES;
     app.isLogin = YES;
     

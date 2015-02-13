@@ -9,7 +9,7 @@
 #import "Reachability.h"
 #import "BASManager.h"
 #import "BASTabView.h"
-
+#import "SDCloudUserDefaults.h"
 
 @class BASMainViewController;
 @class BASChatViewController;

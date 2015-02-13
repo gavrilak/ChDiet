@@ -9,7 +9,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "BASChatViewController.h"
 #import "BASInfoViewController.h"
-
+#import "SDCloudUserDefaults.h"
 
 @implementation BASAppDelegate
 
@@ -52,17 +52,14 @@
     
     [[BASManager sharedInstance]initSocket];
     
-#if USE_ICLOUD_STORAGE
-    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
-#else
-    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-#endif
-    self.isPurchaise = (BOOL)[storage objectForKey:@"isPurchaise"];
+  
+
+    self.isPurchaise = (BOOL)[SDCloudUserDefaults objectForKey:@"isPurchaise"];
     //self.isPurchaise = YES;
-    self.login = [storage objectForKey:@"login"];
-    self.pass = [storage objectForKey:@"password"];
-    self.userInfo = [storage objectForKey:@"userInfo"];
-    NSNumber* logType = (NSNumber*)[storage objectForKey:@"loginType"];
+    self.login = [SDCloudUserDefaults objectForKey:@"login"];
+    self.pass = [SDCloudUserDefaults objectForKey:@"password"];
+    self.userInfo = [SDCloudUserDefaults objectForKey:@"userInfo"];
+    NSNumber* logType = (NSNumber*)[SDCloudUserDefaults objectForKey:@"loginType"];
     self.loginType = (TypeLogin)[logType intValue];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

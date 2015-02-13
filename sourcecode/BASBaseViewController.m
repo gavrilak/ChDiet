@@ -7,7 +7,7 @@
 //
 
 #import "BASBaseViewController.h"
-
+#import "SDCloudUserDefaults.h"
 
 @interface BASBaseViewController ()
 
@@ -180,20 +180,17 @@
 }
 - (void)btnMenuPressed{
     TheApp;
-#if USE_ICLOUD_STORAGE
-    NSUbiquitousKeyValueStore *storage = [NSUbiquitousKeyValueStore defaultStore];
-#else
-    NSUserDefaults *storage = [NSUserDefaults standardUserDefaults];
-#endif
+
+
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"LOGOUT" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
            // NSLog(@"%@",responseObject);
             if (FBSession.activeSession.state == FBSessionStateOpen)
                 [FBSession.activeSession closeAndClearTokenInformation];
             
-            [storage removeObjectForKey:@"login"];
-            [storage removeObjectForKey:@"password"];
-            [storage synchronize];
+            [SDCloudUserDefaults removeObjectForKey:@"login"];
+            [SDCloudUserDefaults removeObjectForKey:@"password"];
+            [SDCloudUserDefaults  synchronize];
             app.isLogin = NO;
             app.navigationController = nil;
             app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];

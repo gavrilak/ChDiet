@@ -144,7 +144,7 @@
     
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"GETMESSAGES" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-            NSLog(@"%@",responseObject);
+           // NSLog(@"%@",responseObject);
             NSDictionary* param = @{@"level":[NSNumber numberWithInt:(int)app.tabView.tabIndex + 1]
                       };
             [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SETMESSAGESREAD" withParam:param] success:^(NSDictionary* responseObject) {

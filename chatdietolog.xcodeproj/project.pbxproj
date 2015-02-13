@@ -150,6 +150,8 @@
 		A5D4D8E11A120D3A00FDEA67 /* register_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */; };
 		A5D4D8E41A120D8D00FDEA67 /* register_bg_6.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */; };
 		A5D4D8E51A120D8D00FDEA67 /* register_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */; };
+		BFCD1B231A8CFDA80086B84D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFCD1B221A8CFDA80086B84D /* CloudKit.framework */; };
+		BFCD1B271A8D01FE0086B84D /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCD1B261A8D01FE0086B84D /* SDCloudUserDefaults.m */; };
 		BFCF40B61A8B680700661DFA /* button_restore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCF40B41A8B680700661DFA /* button_restore@2x.png */; };
 		BFCF40B71A8B680700661DFA /* button_restore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCF40B51A8B680700661DFA /* button_restore@3x.png */; };
 /* End PBXBuildFile section */
@@ -347,6 +349,9 @@
 		A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@3x.png"; path = "SourceCode/Resource/General/register_bg@3x.png"; sourceTree = SOURCE_ROOT; };
 		A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = register_bg_6.png; path = SourceCode/Resource/General/register_bg_6.png; sourceTree = SOURCE_ROOT; };
 		A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@2x.png"; path = "SourceCode/Resource/General/register_bg@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFCD1B221A8CFDA80086B84D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		BFCD1B251A8D01FE0086B84D /* SDCloudUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCloudUserDefaults.h; sourceTree = "<group>"; };
+		BFCD1B261A8D01FE0086B84D /* SDCloudUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCloudUserDefaults.m; sourceTree = "<group>"; };
 		BFCF40B41A8B680700661DFA /* button_restore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_restore@2x.png"; path = "SourceCode/Resource/General/button_restore@2x.png"; sourceTree = SOURCE_ROOT; };
 		BFCF40B51A8B680700661DFA /* button_restore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_restore@3x.png"; path = "SourceCode/Resource/General/button_restore@3x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -356,6 +361,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFCD1B231A8CFDA80086B84D /* CloudKit.framework in Frameworks */,
 				32F97C371A3B2C8B006FEF63 /* FacebookSDK.framework in Frameworks */,
 				A549846119E6AD1600229AC7 /* Security.framework in Frameworks */,
 				A549845F19E6AD0E00229AC7 /* CFNetwork.framework in Frameworks */,
@@ -512,6 +518,7 @@
 		A5741A871993563400261E43 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFCD1B221A8CFDA80086B84D /* CloudKit.framework */,
 				32F97C361A3B2C8B006FEF63 /* FacebookSDK.framework */,
 				A5B0498D1A1B9EA00064F4E7 /* StoreKit.framework */,
 				A549846019E6AD1600229AC7 /* Security.framework */,
@@ -531,6 +538,7 @@
 		A5741ACB1993628900261E43 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				BFCD1B241A8D01FE0086B84D /* SDCLOUD */,
 				A5AB075D1A10DB1800384F11 /* CustomBadge */,
 				A595A9821A08F4A800EB02E2 /* InAppPurchases */,
 				A595A8861A08EBD500EB02E2 /* Reachability */,
@@ -793,6 +801,16 @@
 			name = Registration;
 			sourceTree = "<group>";
 		};
+		BFCD1B241A8D01FE0086B84D /* SDCLOUD */ = {
+			isa = PBXGroup;
+			children = (
+				BFCD1B251A8D01FE0086B84D /* SDCloudUserDefaults.h */,
+				BFCD1B261A8D01FE0086B84D /* SDCloudUserDefaults.m */,
+			);
+			name = SDCLOUD;
+			path = externcode/SDCLOUD;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1019,6 +1037,7 @@
 				A5AB07561A10C08200384F11 /* BASTabView.m in Sources */,
 				A595A9901A08F56100EB02E2 /* BASManager.m in Sources */,
 				A574F3A01A08E83F00D5EFB3 /* main.m in Sources */,
+				BFCD1B271A8D01FE0086B84D /* SDCloudUserDefaults.m in Sources */,
 				A5D4D8DF1A120BA900FDEA67 /* BASRegistrationViewController.m in Sources */,
 				A55A8A251A1A179D00C2D9A0 /* BASInfoViewController.m in Sources */,
 				A595A8F91A08EBD500EB02E2 /* UIImage+WebP.m in Sources */,
@@ -1081,6 +1100,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Irina Sobianina (2W8J43PA8X)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1099,7 +1119,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "1007f1eb-b5f5-429e-a3a4-b73d24627c62";
+				PROVISIONING_PROFILE = "809c3ea5-f336-4008-a73e-634f49dbb2e8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1121,6 +1141,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Irina Sobianina (2W8J43PA8X)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1132,7 +1153,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "1007f1eb-b5f5-429e-a3a4-b73d24627c62";
+				PROVISIONING_PROFILE = "09d47838-0511-4952-b7b0-1a4b5445d5dd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
