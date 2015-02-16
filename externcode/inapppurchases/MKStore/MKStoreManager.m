@@ -220,10 +220,10 @@ static MKStoreManager* _sharedStoreManager; // self
 
 +(void) loadPurchases 
 {
-
-	feature1Purchased = [SDCloudUserDefaults boolForKey:feature1Id];
-	feature2Purchased = [SDCloudUserDefaults boolForKey:feature2Id];
-    feature3Purchased = [SDCloudUserDefaults boolForKey:feature3Id];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	feature1Purchased = [userDefaults boolForKey:feature1Id];
+	feature2Purchased = [userDefaults boolForKey:feature2Id];
+    feature3Purchased = [userDefaults boolForKey:feature3Id];
 
 }
 
@@ -231,9 +231,10 @@ static MKStoreManager* _sharedStoreManager; // self
 +(void) updatePurchases
 {
 
-	[SDCloudUserDefaults setBool:feature1Purchased forKey:feature1Id];
-	[SDCloudUserDefaults setBool:feature2Purchased forKey:feature2Id];
-    [SDCloudUserDefaults setBool:feature3Purchased forKey:feature3Id];
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setBool:feature1Purchased forKey:feature1Id];
+	[userDefaults setBool:feature2Purchased forKey:feature2Id];
+    [userDefaults setBool:feature3Purchased forKey:feature3Id];
 
 }
 @end

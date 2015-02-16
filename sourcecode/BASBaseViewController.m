@@ -7,7 +7,6 @@
 //
 
 #import "BASBaseViewController.h"
-#import "SDCloudUserDefaults.h"
 
 @interface BASBaseViewController ()
 
@@ -187,10 +186,10 @@
            // NSLog(@"%@",responseObject);
             if (FBSession.activeSession.state == FBSessionStateOpen)
                 [FBSession.activeSession closeAndClearTokenInformation];
-            
-            [SDCloudUserDefaults removeObjectForKey:@"login"];
-            [SDCloudUserDefaults removeObjectForKey:@"password"];
-            [SDCloudUserDefaults  synchronize];
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults removeObjectForKey:@"login"];
+            [userDefaults removeObjectForKey:@"password"];
+            [userDefaults  synchronize];
             app.isLogin = NO;
             app.navigationController = nil;
             app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];

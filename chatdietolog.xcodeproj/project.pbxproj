@@ -150,8 +150,11 @@
 		A5D4D8E11A120D3A00FDEA67 /* register_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */; };
 		A5D4D8E41A120D8D00FDEA67 /* register_bg_6.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */; };
 		A5D4D8E51A120D8D00FDEA67 /* register_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */; };
-		BFCD1B231A8CFDA80086B84D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFCD1B221A8CFDA80086B84D /* CloudKit.framework */; };
-		BFCD1B271A8D01FE0086B84D /* SDCloudUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCD1B261A8D01FE0086B84D /* SDCloudUserDefaults.m */; };
+		BFCDB6BE1A91EE1800E7C956 /* BASGuestInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCDB6BD1A91EE1800E7C956 /* BASGuestInputViewController.m */; };
+		BFCDB6C31A91F39600E7C956 /* guest_bg_6.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCDB6C01A91F39600E7C956 /* guest_bg_6.png */; };
+		BFCDB6C41A91F39600E7C956 /* guest_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCDB6C11A91F39600E7C956 /* guest_bg@2x.png */; };
+		BFCDB6C51A91F39600E7C956 /* guest_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCDB6C21A91F39600E7C956 /* guest_bg@3x.png */; };
+		BFCDB6D51A9251CA00E7C956 /* info_guest@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCDB6D41A9251CA00E7C956 /* info_guest@3x.png */; };
 		BFCF40B61A8B680700661DFA /* button_restore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCF40B41A8B680700661DFA /* button_restore@2x.png */; };
 		BFCF40B71A8B680700661DFA /* button_restore@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCF40B51A8B680700661DFA /* button_restore@3x.png */; };
 /* End PBXBuildFile section */
@@ -349,9 +352,12 @@
 		A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@3x.png"; path = "SourceCode/Resource/General/register_bg@3x.png"; sourceTree = SOURCE_ROOT; };
 		A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = register_bg_6.png; path = SourceCode/Resource/General/register_bg_6.png; sourceTree = SOURCE_ROOT; };
 		A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@2x.png"; path = "SourceCode/Resource/General/register_bg@2x.png"; sourceTree = SOURCE_ROOT; };
-		BFCD1B221A8CFDA80086B84D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		BFCD1B251A8D01FE0086B84D /* SDCloudUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCloudUserDefaults.h; sourceTree = "<group>"; };
-		BFCD1B261A8D01FE0086B84D /* SDCloudUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCloudUserDefaults.m; sourceTree = "<group>"; };
+		BFCDB6BC1A91EE1800E7C956 /* BASGuestInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BASGuestInputViewController.h; sourceTree = SOURCE_ROOT; };
+		BFCDB6BD1A91EE1800E7C956 /* BASGuestInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BASGuestInputViewController.m; sourceTree = SOURCE_ROOT; };
+		BFCDB6C01A91F39600E7C956 /* guest_bg_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = guest_bg_6.png; path = SourceCode/Resource/General/guest_bg_6.png; sourceTree = SOURCE_ROOT; };
+		BFCDB6C11A91F39600E7C956 /* guest_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "guest_bg@2x.png"; path = "SourceCode/Resource/General/guest_bg@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFCDB6C21A91F39600E7C956 /* guest_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "guest_bg@3x.png"; path = "SourceCode/Resource/General/guest_bg@3x.png"; sourceTree = SOURCE_ROOT; };
+		BFCDB6D41A9251CA00E7C956 /* info_guest@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "info_guest@3x.png"; path = "SourceCode/Resource/General/info_guest@3x.png"; sourceTree = SOURCE_ROOT; };
 		BFCF40B41A8B680700661DFA /* button_restore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_restore@2x.png"; path = "SourceCode/Resource/General/button_restore@2x.png"; sourceTree = SOURCE_ROOT; };
 		BFCF40B51A8B680700661DFA /* button_restore@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_restore@3x.png"; path = "SourceCode/Resource/General/button_restore@3x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -361,7 +367,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFCD1B231A8CFDA80086B84D /* CloudKit.framework in Frameworks */,
 				32F97C371A3B2C8B006FEF63 /* FacebookSDK.framework in Frameworks */,
 				A549846119E6AD1600229AC7 /* Security.framework in Frameworks */,
 				A549845F19E6AD0E00229AC7 /* CFNetwork.framework in Frameworks */,
@@ -401,6 +406,10 @@
 		A549846219E6AD9B00229AC7 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				BFCDB6D41A9251CA00E7C956 /* info_guest@3x.png */,
+				BFCDB6C01A91F39600E7C956 /* guest_bg_6.png */,
+				BFCDB6C11A91F39600E7C956 /* guest_bg@2x.png */,
+				BFCDB6C21A91F39600E7C956 /* guest_bg@3x.png */,
 				32E78D721A603DD800BF8D26 /* button_guest_in@2x.png */,
 				32E78D731A603DD800BF8D26 /* button_guest_in@3x.png */,
 				4C257A361A43B528001F8511 /* bg_5@3x.png */,
@@ -518,7 +527,6 @@
 		A5741A871993563400261E43 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BFCD1B221A8CFDA80086B84D /* CloudKit.framework */,
 				32F97C361A3B2C8B006FEF63 /* FacebookSDK.framework */,
 				A5B0498D1A1B9EA00064F4E7 /* StoreKit.framework */,
 				A549846019E6AD1600229AC7 /* Security.framework */,
@@ -538,7 +546,6 @@
 		A5741ACB1993628900261E43 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				BFCD1B241A8D01FE0086B84D /* SDCLOUD */,
 				A5AB075D1A10DB1800384F11 /* CustomBadge */,
 				A595A9821A08F4A800EB02E2 /* InAppPurchases */,
 				A595A8861A08EBD500EB02E2 /* Reachability */,
@@ -719,6 +726,7 @@
 		A59BBE8B1994C855000004A6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BFCDB6BF1A91EE1D00E7C956 /* Guest input */,
 				A549845819E6ABFC00229AC7 /* Main */,
 				A595A9AB1A0900DA00EB02E2 /* Chat */,
 				A5AD143E1A134FAF00F96F3F /* Input */,
@@ -801,15 +809,14 @@
 			name = Registration;
 			sourceTree = "<group>";
 		};
-		BFCD1B241A8D01FE0086B84D /* SDCLOUD */ = {
+		BFCDB6BF1A91EE1D00E7C956 /* Guest input */ = {
 			isa = PBXGroup;
 			children = (
-				BFCD1B251A8D01FE0086B84D /* SDCloudUserDefaults.h */,
-				BFCD1B261A8D01FE0086B84D /* SDCloudUserDefaults.m */,
+				BFCDB6BC1A91EE1800E7C956 /* BASGuestInputViewController.h */,
+				BFCDB6BD1A91EE1800E7C956 /* BASGuestInputViewController.m */,
 			);
-			name = SDCLOUD;
-			path = externcode/SDCLOUD;
-			sourceTree = SOURCE_ROOT;
+			name = "Guest input";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -869,7 +876,7 @@
 								enabled = 1;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -912,6 +919,7 @@
 				A5A8A6B81A2E092800C266D4 /* separator@2x.png in Resources */,
 				A5A8A6B31A2E048000C266D4 /* button_send@2x.png in Resources */,
 				A5A8D0E31A24B3C200528DF2 /* output@2x.png in Resources */,
+				BFCDB6C51A91F39600E7C956 /* guest_bg@3x.png in Resources */,
 				A55A8A1F1A1A175200C2D9A0 /* bg_about_6.png in Resources */,
 				A595A82E1A08EA5900EB02E2 /* Images.xcassets in Resources */,
 				A595A9811A08F14A00EB02E2 /* Icon@2x.png in Resources */,
@@ -928,6 +936,7 @@
 				32EECF521A714F3600FEF887 /* button_2390@2x.png in Resources */,
 				A595A9711A08F14A00EB02E2 /* Icon-60.png in Resources */,
 				A595A9761A08F14A00EB02E2 /* Icon-76.png in Resources */,
+				BFCDB6D51A9251CA00E7C956 /* info_guest@3x.png in Resources */,
 				A595A94C1A08F11600EB02E2 /* button_sign_up@2x.png in Resources */,
 				A595A9481A08F11600EB02E2 /* button_sign_in@2x.png in Resources */,
 				BFCF40B61A8B680700661DFA /* button_restore@2x.png in Resources */,
@@ -987,9 +996,11 @@
 				A595A9741A08F14A00EB02E2 /* Icon-72.png in Resources */,
 				A595A97D1A08F14A00EB02E2 /* Icon-Small.png in Resources */,
 				A5D4D8E51A120D8D00FDEA67 /* register_bg@2x.png in Resources */,
+				BFCDB6C41A91F39600E7C956 /* guest_bg@2x.png in Resources */,
 				4C106AD61A446B1F001D5567 /* in_bg_6.png in Resources */,
 				A595A97E1A08F14A00EB02E2 /* Icon-Small@2x.png in Resources */,
 				A595A9501A08F11600EB02E2 /* icon_nut_s@2x.png in Resources */,
+				BFCDB6C31A91F39600E7C956 /* guest_bg_6.png in Resources */,
 				A595A97A1A08F14A00EB02E2 /* Icon-Small-40@3x.png in Resources */,
 				4C106AD81A446B1F001D5567 /* in_bg@3x.png in Resources */,
 				A595A9B71A09069A00EB02E2 /* blue.png in Resources */,
@@ -1019,6 +1030,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A574F3981A08E7F600D5EFB3 /* BASMainViewController.m in Sources */,
+				BFCDB6BE1A91EE1800E7C956 /* BASGuestInputViewController.m in Sources */,
 				A574F3951A08E7ED00D5EFB3 /* BASBaseViewController.m in Sources */,
 				A595A98B1A08F4A800EB02E2 /* MKStoreManager.m in Sources */,
 				A595A8F11A08EBD500EB02E2 /* SDWebImageDecoder.m in Sources */,
@@ -1037,7 +1049,6 @@
 				A5AB07561A10C08200384F11 /* BASTabView.m in Sources */,
 				A595A9901A08F56100EB02E2 /* BASManager.m in Sources */,
 				A574F3A01A08E83F00D5EFB3 /* main.m in Sources */,
-				BFCD1B271A8D01FE0086B84D /* SDCloudUserDefaults.m in Sources */,
 				A5D4D8DF1A120BA900FDEA67 /* BASRegistrationViewController.m in Sources */,
 				A55A8A251A1A179D00C2D9A0 /* BASInfoViewController.m in Sources */,
 				A595A8F91A08EBD500EB02E2 /* UIImage+WebP.m in Sources */,

@@ -251,7 +251,7 @@
         [[BASManager sharedInstance] LogIn];
     }  else if(button == _guestButton){
         app.loginType = GUEST;
-        [[BASManager sharedInstance] LogIn];
+       [app.navigationController pushViewController:app.guestController animated:YES];
     }
 }
 #pragma mark - Purchaise
@@ -261,11 +261,11 @@
     TheApp;
     [app showIndecator:NO withView:app.window];
 
-    
-    [SDCloudUserDefaults removeObjectForKey:@"isPurchaise"];
-    [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseTermin"];
-    [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseDate"];
-    [SDCloudUserDefaults synchronize];
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:@"isPurchaise"];
+    [userDefaults removeObjectForKey:@"isPurchaiseTermin"];
+    [userDefaults removeObjectForKey:@"isPurchaiseDate"];
+    [userDefaults synchronize];
 
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
     [objDateFormatter setDateFormat:@"dd.MM.yyyy"];
@@ -279,10 +279,10 @@
     }else if(curButton == _sixButton){
         term = [NSNumber numberWithInt:6];
     }
-    [SDCloudUserDefaults setObject:dateStr forKey:@"isPurchaiseDate"];
-    [SDCloudUserDefaults setObject:term forKey:@"isPurchaiseTermin"];
-    [SDCloudUserDefaults setBool:YES forKey:@"isPurchaise"];
-    [SDCloudUserDefaults synchronize];
+    [userDefaults setObject:dateStr forKey:@"isPurchaiseDate"];
+    [userDefaults setObject:term forKey:@"isPurchaiseTermin"];
+    [userDefaults setBool:YES forKey:@"isPurchaise"];
+    [userDefaults synchronize];
     app.isPurchaise = YES;
     app.isLogin = YES;
     

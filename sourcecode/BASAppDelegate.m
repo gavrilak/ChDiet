@@ -9,7 +9,6 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "BASChatViewController.h"
 #import "BASInfoViewController.h"
-#import "SDCloudUserDefaults.h"
 
 @implementation BASAppDelegate
 
@@ -53,13 +52,13 @@
     [[BASManager sharedInstance]initSocket];
     
   
-
-    self.isPurchaise = (BOOL)[SDCloudUserDefaults objectForKey:@"isPurchaise"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.isPurchaise = (BOOL)[userDefaults objectForKey:@"isPurchaise"];
     //self.isPurchaise = YES;
-    self.login = [SDCloudUserDefaults objectForKey:@"login"];
-    self.pass = [SDCloudUserDefaults objectForKey:@"password"];
-    self.userInfo = [SDCloudUserDefaults objectForKey:@"userInfo"];
-    NSNumber* logType = (NSNumber*)[SDCloudUserDefaults objectForKey:@"loginType"];
+    self.login = [userDefaults objectForKey:@"login"];
+    self.pass = [userDefaults objectForKey:@"password"];
+    self.userInfo = [userDefaults objectForKey:@"userInfo"];
+    NSNumber* logType = (NSNumber*)[userDefaults objectForKey:@"loginType"];
     self.loginType = (TypeLogin)[logType intValue];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -73,8 +72,9 @@
     self.mainController = [BASMainViewController new];
     self.infoController = [BASInfoViewController new];
     self.inputController = [BASInputViewController new];
+    self.guestController = [BASGuestInputViewController new];
     
-    if(_login == nil && _pass == nil){
+    if(_login == nil ){
        self.chatController = [[BASChatViewController alloc]init];
        self.navigationController = [[UINavigationController alloc]initWithRootViewController:_mainController];
        self.window.rootViewController = _navigationController;
@@ -101,8 +101,7 @@
 -(void)openLoginScreen{
     [self showIndecator:NO withView:self.window];
     
-    if(_login != nil && _pass != nil){
-        _loginType = LOCAL;
+    if(_login != nil ){
         [[BASManager sharedInstance] LogIn];
     }
 }

@@ -276,11 +276,12 @@
                 return ;
             } else{
                 app.userInfo = (NSDictionary*)[userInfo objectAtIndex:0];
-                [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
-                [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
-                [SDCloudUserDefaults setObject:app.userInfo forKey:@"userInfo"];
-                [SDCloudUserDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                [SDCloudUserDefaults synchronize];
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
+                [userDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
+                [userDefaults setObject:app.userInfo forKey:@"userInfo"];
+                [userDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                [userDefaults synchronize];
                 
                 [[BASManager sharedInstance] checkPurshes];
             }

@@ -19,6 +19,7 @@
     #import "UIImageView+WebCache.h"
     #import "BASTabView.h"
     #import "BASInputViewController.h"
+    #import "BASGuestInputViewController.h"
     #import "Reachability.h"
 #endif
 #define TheApp BASAppDelegate *app = (BASAppDelegate*)[[UIApplication sharedApplication] delegate]

@@ -9,12 +9,12 @@
 #import "Reachability.h"
 #import "BASManager.h"
 #import "BASTabView.h"
-#import "SDCloudUserDefaults.h"
 
 @class BASMainViewController;
 @class BASChatViewController;
 @class BASInfoViewController;
 @class BASInputViewController;
+@class BASGuestInputViewController;
 
 typedef enum SocialType {
     FACEBOOKTYPE,
@@ -44,6 +44,7 @@ static NSString *feature3Id = @"33333";//@"com.bestappstudio.Chat_33";
 @property (nonatomic, strong) BASChatViewController* chatController;
 @property (nonatomic, strong) BASInfoViewController* infoController;
 @property (nonatomic, strong) BASInputViewController* inputController;
+@property (nonatomic, strong) BASGuestInputViewController* guestController;
 @property (nonatomic, assign) BOOL isShowMessage;
 @property (nonatomic, assign) BOOL isShowContent;
 @property (strong, nonatomic) NSArray* contentUsers;

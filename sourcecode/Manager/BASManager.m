@@ -136,9 +136,10 @@
     switch (app.loginType) {
         case GUEST:{
             NSString* UIUD =  [[[UIDevice currentDevice] identifierForVendor]UUIDString];
-            
+            app.pass = UIUD;
             __block NSDictionary* param = @{
                                             @"uid" : UIUD,
+                                            @"login" : app.login,
                                             @"timezone" : timezone
                                           };
             [self getData: [[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param]success:^(NSDictionary *responseObject) {
@@ -147,16 +148,28 @@
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
+                    if(dict.allKeys.count == 1){
+                        [self showAlertViewWithMess:@"Данный логин уже используется!"];
+                        if([_delegate respondsToSelector:@selector(autorizationUser:withResult:)]){
+                            [_delegate autorizationUser:self withResult:NO];
+                        }
+                        return;
+                    }
+
                     NSNumber* isPurches =(NSNumber*) [ dict objectForKey:@"isPurches"];
                     if ([isPurches integerValue] == 1)
-                        app.isPurchaise = YES ;
+                        app.isPurchaise = YES;
                     else
                         app.isPurchaise = NO;
-                    [SDCloudUserDefaults setString:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
-                    [SDCloudUserDefaults setString:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
-                    [SDCloudUserDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
-                    [SDCloudUserDefaults setInteger:app.loginType forKey:@"loginType"];
-                    [SDCloudUserDefaults synchronize];
+                    app.login = [app.userInfo objectForKey:@"login"];
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:app.login forKey:@"login"];
+                    [userDefaults setObject:app.pass forKey:@"password"];
+                    [userDefaults setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                    [userDefaults setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                    [userDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
+                    [userDefaults setInteger:app.loginType forKey:@"loginType"];
+                    [userDefaults synchronize];
                     [self checkPurshes];
                   
                 }
@@ -191,14 +204,15 @@
                         app.isPurchaise = YES ;
                     else
                         app.isPurchaise = NO;
-                    [SDCloudUserDefaults setString:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
-                    [SDCloudUserDefaults setString:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
-                    [SDCloudUserDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
-                    [SDCloudUserDefaults setString:app.login forKey:@"login"];
-                    [SDCloudUserDefaults setString:app.pass forKey:@"password"];
-                    [SDCloudUserDefaults setObject:app.userInfo forKey:@"userInfo"];
-                    [SDCloudUserDefaults setInteger: app.loginType forKey:@"loginType"];
-                    [SDCloudUserDefaults synchronize];
+                     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                    [userDefaults setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                    [userDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
+                    [userDefaults setObject:app.login forKey:@"login"];
+                    [userDefaults setObject:app.pass forKey:@"password"];
+                    [userDefaults setObject:app.userInfo forKey:@"userInfo"];
+                    [userDefaults setInteger: app.loginType forKey:@"loginType"];
+                    [userDefaults synchronize];
                     app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                     app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                     [self checkPurshes];
@@ -253,14 +267,15 @@
                                                                        app.isPurchaise = YES ;
                                                                    else
                                                                        app.isPurchaise = NO;
-                                                                   [SDCloudUserDefaults setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
-                                                                   [SDCloudUserDefaults setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
-                                                                   [SDCloudUserDefaults setBool:app.isPurchaise forKey:@"isPurchaise"];
-                                                                   [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
-                                                                   [SDCloudUserDefaults setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
-                                                                   [SDCloudUserDefaults setObject:app.userInfo forKey:@"userInfo"];
-                                                                   [SDCloudUserDefaults setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
-                                                                   [SDCloudUserDefaults synchronize];
+                                                                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                                   [userDefaults  setObject:[dict objectForKey:@"purchase_date"] forKey:@"isPurchaiseDate"];
+                                                                   [userDefaults  setObject:[dict objectForKey:@"term"] forKey:@"isPurchaiseTermin"];
+                                                                   [userDefaults  setBool:app.isPurchaise forKey:@"isPurchaise"];
+                                                                   [userDefaults  setObject:(NSString*)[app.userInfo objectForKey:@"login"] forKey:@"login"];
+                                                                   [userDefaults  setObject:(NSString*)[app.userInfo objectForKey:@"pass"] forKey:@"password"];
+                                                                   [userDefaults  setObject:app.userInfo forKey:@"userInfo"];
+                                                                   [userDefaults  setObject:[NSNumber numberWithInt:app.loginType] forKey:@"loginType"];
+                                                                   [userDefaults  synchronize];
                                                                    app.login = (NSString*)[app.userInfo objectForKey:@"login"];
                                                                    app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                                                          
@@ -293,9 +308,9 @@
 
 -(void) checkPurshes {
     TheApp;
-
-    NSString* date = (NSString*)[SDCloudUserDefaults objectForKey:@"isPurchaiseDate"];
-    NSNumber* term = (NSNumber*)[SDCloudUserDefaults objectForKey:@"isPurchaiseTermin"];
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* date = (NSString*)[userDefaults objectForKey:@"isPurchaiseDate"];
+    NSNumber* term = (NSNumber*)[userDefaults objectForKey:@"isPurchaiseTermin"];
     app.isLogin = YES;
     NSDictionary* param;
     if (date!=nil && term !=nil){
@@ -317,10 +332,10 @@
                 
             case -1:
             {
-                [SDCloudUserDefaults removeObjectForKey:@"isPurchaise"];
-                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseTermin"];
-                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseDate"];
-                [SDCloudUserDefaults synchronize];
+                [userDefaults removeObjectForKey:@"isPurchaise"];
+                [userDefaults removeObjectForKey:@"isPurchaiseTermin"];
+                [userDefaults removeObjectForKey:@"isPurchaiseDate"];
+                [userDefaults synchronize];
                 app.isPurchaise = NO;
                 app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
                 [app.window setRootViewController:app.navigationController];
@@ -330,10 +345,10 @@
             {
             
                 [[BASManager sharedInstance]showAlertViewWithMess:@"Ваша подписка истекла! Пожалуйста приобретите подписку!"];
-                [SDCloudUserDefaults removeObjectForKey:@"isPurchaise"];
-                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseTermin"];
-                [SDCloudUserDefaults removeObjectForKey:@"isPurchaiseDate"];
-                [SDCloudUserDefaults synchronize];
+                [userDefaults removeObjectForKey:@"isPurchaise"];
+                [userDefaults removeObjectForKey:@"isPurchaiseTermin"];
+                [userDefaults removeObjectForKey:@"isPurchaiseDate"];
+                [userDefaults synchronize];
                 app.isPurchaise = NO;
                 app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
                 [app.window setRootViewController:app.navigationController];
