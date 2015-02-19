@@ -213,8 +213,8 @@
                     [userDefaults setObject:app.userInfo forKey:@"userInfo"];
                     [userDefaults setInteger: app.loginType forKey:@"loginType"];
                     [userDefaults synchronize];
-                    app.login = (NSString*)[app.userInfo objectForKey:@"login"];
-                    app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
+                    //app.login = (NSString*)[app.userInfo objectForKey:@"login"];
+                   // app.pass = (NSString*)[app.userInfo objectForKey:@"pass"];
                     [self checkPurshes];
                                               
                 }
@@ -393,6 +393,7 @@
 {
     TheApp;
     NSLog(@"Websocket Connected");
+    NSLog(@"%@,  %@",app.login,app.pass);
     if(isClose){
         
         NSDictionary* param = @{

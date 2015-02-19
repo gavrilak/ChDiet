@@ -268,7 +268,7 @@
     [userDefaults synchronize];
 
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
-    [objDateFormatter setDateFormat:@"dd.MM.yyyy"];
+    [objDateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString* dateStr = [objDateFormatter stringFromDate:date];
     NSNumber* term = nil;
 
