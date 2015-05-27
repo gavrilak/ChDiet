@@ -67,6 +67,7 @@ static NSString *feature3Id = @"com.bestappstudio.Chat_33";
 @property (nonatomic, strong) NSDictionary* userInfo;
 @property (nonatomic, strong) NSString* login;
 @property (nonatomic, strong) NSString* pass;
+@property (nonatomic, strong) NSString* UID;
 @property (nonatomic, assign) MessageType messageType;
 @property (nonatomic, assign) BOOL isPurchaise;
 @property (nonatomic, strong) NSString* pushToken;

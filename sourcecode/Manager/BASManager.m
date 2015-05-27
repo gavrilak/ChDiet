@@ -184,11 +184,12 @@
             __block NSDictionary* param = @{
                                     @"login" :app.login,
                                     @"pass" : app.pass,
+                                    @"uid" : app.UID,
                                     @"timezone" : timezone
                                     };
             [self getData:[[BASManager sharedInstance] formatRequest:@"AUTH" withParam:param] success:^(NSDictionary* responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                   // NSLog(@"%@",responseObject);
+                    NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     app.userInfo = [NSDictionary dictionaryWithDictionary:dict];
@@ -247,7 +248,8 @@
                                                        NSString* tokenStr = (NSString*)[dict objectForKey:@"FACEBOOK_NON_JSON_RESULT"];
                                                        tokenStr = [tokenStr substringFromIndex:13];
                                                        NSDictionary* param = @{
-                                                                               @"id" :ID,
+                                                                               @"id" : ID,
+                                                                               @"uid" : app.UID,
                                                                                @"access_token" : tokenStr,
                                                                                @"timezone" : timezone
                                                                                };
@@ -358,6 +360,9 @@
             {
             
                 app.isPurchaise = YES;
+                if (app.pushToken == nil) {
+                    app.pushToken = @"";
+                }
                 NSDictionary* param = @{
                                     @"push_token" :app.pushToken,
                                     };
@@ -452,15 +457,18 @@
     NSDictionary* dict = (NSDictionary*)json;
     
     NSNumber* coming = (NSNumber*)[dict objectForKey:@"coming"];
-    if([coming integerValue] == 1){
-        _success(dict);
+    if([(NSString*) [dict objectForKey:@"command"] isEqualToString:@"INTERNALSERVERERROR"]) {
+        _failure(@"INTERNALSERVERERROR");
     } else {
-        if([_delegate respondsToSelector:@selector(icommingMessage:withObject:)]){
-            [_delegate icommingMessage:self withObject:dict];
+        if([coming integerValue] == 1){
+            _success(dict);
+        } else {
+            if([_delegate respondsToSelector:@selector(icommingMessage:withObject:)]){
+                [_delegate icommingMessage:self withObject:dict];
+            }
         }
+        
     }
-    
-    
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean;

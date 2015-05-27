@@ -144,12 +144,12 @@
     
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"GETMESSAGES" withParam:nil] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-           // NSLog(@"%@",responseObject);
+            NSLog(@"%@",responseObject);
             NSDictionary* param = @{@"level":[NSNumber numberWithInt:(int)app.tabView.tabIndex + 1]
                       };
             [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SETMESSAGESREAD" withParam:param] success:^(NSDictionary* responseObject) {
                 if([responseObject isKindOfClass:[NSDictionary class]]){
-                   // NSLog(@"%@",responseObject);
+                    NSLog(@"%@",responseObject);
                     NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                     NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                     
@@ -189,10 +189,10 @@
 
         }
     }failure:^(NSString *error) {
-        NSLog(@"%@",error);
+       [[BASManager sharedInstance] showAlertViewWithMess:@"Ошибка при передаче данных! Перезапустите приложение!"];
     }];
 }
-- (void)sendClicked{
+- (void)sendClicked{ 
     TheApp;
     [_textField resignFirstResponder];
     
@@ -215,7 +215,7 @@
     
     [[BASManager sharedInstance] getData:[[BASManager sharedInstance] formatRequest:@"SENDMESSAGE" withParam:param] success:^(NSDictionary* responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]){
-            //NSLog(@"%@",responseObject);
+            NSLog(@"%@",responseObject);
             [app showIndecator:NO withView:self.view];
             [_sendButton setEnabled:YES];
             [_textField setEditable:YES];
@@ -262,7 +262,9 @@
     }failure:^(NSString *error) {
         [_sendButton setEnabled:YES];
         [_textField setEditable:YES];
-        NSLog(@"%@",error);
+        if ([error isEqualToString:@"INTERNALSERVERERROR"]){
+            [[BASManager sharedInstance] showAlertViewWithMess:@"Ошибка при передаче данных! Перезапустите приложение!"];
+        }
     }];
 
     
@@ -476,6 +478,7 @@
 }
 #pragma mark - BASManager delegate method
 - (void)icommingMessage:(BASManager*)manager withObject:(NSDictionary*)obj{
+    
     [self getData];
 }
 @end

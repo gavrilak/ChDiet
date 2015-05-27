@@ -242,7 +242,7 @@
     NSString* pass = ((UITextField*)[_textFields objectAtIndex:6]).text;
     NSString* confirmpass = ((UITextField*)[_textFields objectAtIndex:7]).text;
     if([pass compare:confirmpass] != NSOrderedSame){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Сообщение" message:@"Пороль и потверждение не совпадают!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Сообщение" message:@"Пароль и потверждение не совпадают!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         
         [alert show];
         return;
@@ -257,6 +257,7 @@
     NSDictionary* param = @{
                             @"login" :((UITextField*)[_textFields objectAtIndex:5]).text,
                             @"pass" : ((UITextField*)[_textFields objectAtIndex:6]).text,
+                            @"uid" : app.UID,
                             @"timezone" : timezone,
                             @"surname_user" :((UITextField*)[_textFields objectAtIndex:1]).text,
                             @"name_user" :((UITextField*)[_textFields objectAtIndex:0]).text,
@@ -272,8 +273,12 @@
             NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
             
             if(dict.allKeys.count == 1){
-                [[BASManager sharedInstance] showAlertViewWithMess:@"Ошибка регистрации!"];
-                return ;
+                if ([[dict objectForKey:@"result"] isEqualToString:@"This login is not available"]) {
+                    [[BASManager sharedInstance] showAlertViewWithMess:@"Данный e-mail адрес уже используется"];
+                } else {
+                    [[BASManager sharedInstance] showAlertViewWithMess:@"Ошибка регистрации!"];
+                    return ;
+                }
             } else{
                 app.userInfo = (NSDictionary*)[userInfo objectAtIndex:0];
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

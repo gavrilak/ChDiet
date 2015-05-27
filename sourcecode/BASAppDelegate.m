@@ -57,6 +57,7 @@
     //self.isPurchaise = YES;
     self.login = [userDefaults objectForKey:@"login"];
     self.pass = [userDefaults objectForKey:@"password"];
+    self.UID = [[[UIDevice currentDevice] identifierForVendor]UUIDString];
     self.userInfo = [userDefaults objectForKey:@"userInfo"];
     NSNumber* logType = (NSNumber*)[userDefaults objectForKey:@"loginType"];
     self.loginType = (TypeLogin)[logType intValue];
@@ -237,14 +238,12 @@
     myString = [myString stringByReplacingOccurrencesOfString:@"<" withString:@""];
     myString = [myString stringByReplacingOccurrencesOfString:@">" withString:@""];
     self.pushToken = myString;
-    
-   
-
- 
 }
+
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     
 }
+
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Received notification: %@", userInfo);
     NSDictionary* dict = (NSDictionary*)[userInfo objectForKey:@"aps"];
