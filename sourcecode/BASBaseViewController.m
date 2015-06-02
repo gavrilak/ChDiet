@@ -28,7 +28,7 @@
     [super viewDidLoad];
 
     UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"bg"] drawInRect:self.view.bounds];
+    [[UIImage imageNamed:@"bg"] drawInRect:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - [UIImage imageNamed:@"tabbar_bg.png"].size.height-62)];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

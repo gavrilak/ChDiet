@@ -229,7 +229,7 @@
         case FACEBOOK:{
         
 
-           [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"user_friends", @"email",@"user_photos",@"read_friendlists"]
+           [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"user_friends", @"email",@"user_photos",@"read_friendlists", @"user_birthday", @"user_location"]
                                                allowLoginUI:YES
                                           completionHandler:
              ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -242,20 +242,17 @@
                          
                                                completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                                                    if (!error) {
-                                                       
-                                                       //NSLog(@"user events: %@", result);
-                                                       NSDictionary* dict = [NSDictionary dictionaryWithDictionary:result];
-                                                       NSString* tokenStr = (NSString*)[dict objectForKey:@"FACEBOOK_NON_JSON_RESULT"];
-                                                       tokenStr = [tokenStr substringFromIndex:13];
+                                                       NSString* token =  [[[FBSession activeSession] accessTokenData] accessToken];
+                                                       NSLog(@"%@",token);
                                                        NSDictionary* param = @{
                                                                                @"id" : ID,
                                                                                @"uid" : app.UID,
-                                                                               @"access_token" : tokenStr,
+                                                                               @"access_token" : token,
                                                                                @"timezone" : timezone
                                                                                };
                                                        [self getData:[[BASManager sharedInstance] formatRequest:@"REGISTER" withParam:param] success:^(NSDictionary* responseObject) {
                                                            if([responseObject isKindOfClass:[NSDictionary class]]){
-                                                             //  NSLog(@"%@",responseObject);
+                                                               NSLog(@"%@",responseObject);
                                                                NSArray* userInfo = (NSArray*)[responseObject objectForKey:@"param"];
                                                                NSDictionary* dict = (NSDictionary*)[userInfo objectAtIndex:0];
                                                               
