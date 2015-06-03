@@ -76,4 +76,5 @@ static NSString *feature3Id = @"com.bestappstudio.Chat_33";
 - (BOOL)testInternetConnection;
 - (BOOL) is4InchScreen;
 - (void)showIndecator:(BOOL)state withView:(UIView*)view;
++ (UIImage *)imageFromColor:(UIColor *)color;
 @end

@@ -40,6 +40,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>mdkviu8C.ttf</string>
+		<string>gillitalic.ttf</string>
+		<string>gillregular.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

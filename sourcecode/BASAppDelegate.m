@@ -192,7 +192,8 @@
 
     
    // [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar_bg.png"] forBarMetrics:UIBarMetricsDefault];
+  //  [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar_bg_new.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[BASAppDelegate imageFromColor:[UIColor colorWithRed:175/255.0 green:218/255.0 blue:174/255.0 alpha:1]] forBarMetrics:UIBarMetricsDefault];
     
    /* [[UINavigationBar appearance] setTitleTextAttributes:@{
                                                            UITextAttributeTextColor: [UIColor colorWithRed:255.0/255.0 green:164.0/255.0 blue:65.0/255.0 alpha:1.0],
@@ -201,6 +202,8 @@
                                                            UITextAttributeFont: [UIFont fontWithName:@"Cartonsix NC" size:40.0],
                                                            }];*/
 }
+
+
 - (BOOL) is4InchScreen{
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     if (screenBounds.size.height == 568) {
@@ -343,6 +346,17 @@
         
     }
     
+}
+
++ (UIImage *)imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 @end

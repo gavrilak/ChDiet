@@ -66,7 +66,7 @@
     
     
     
-    UIImage *image = [UIImage imageNamed:@"cell"];
+    UIImage *image = [UIImage imageNamed:@"cell.png"];
     self.bgTextView = [[UIImageView alloc]initWithImage:image];
     [_bgTextView setFrame:CGRectMake(5.f, self.view.bounds.size.height - image.size.height - app.navigationController.navigationBar.frame.size.height - 20.f - 10.f - app.tabView.frame.size.height  , image.size.width, image.size.height)];
     if(IS_IPHONE_6){
@@ -76,17 +76,17 @@
     }
     [_scrollview addSubview:_bgTextView];
     
-    image = [UIImage imageNamed:@"separator"];
+    image = [UIImage imageNamed:@"separator.png"];
     UIImageView * separ = [[UIImageView alloc]initWithImage:image];
-    [separ setFrame:CGRectMake(0.f, _bgTextView.frame.origin.y - 10.f, self.view.bounds.size.width, image.size.height)];
+    [separ setFrame:CGRectMake(10.f, _bgTextView.frame.origin.y - 10.f, self.view.bounds.size.width - 20, image.size.height)];
     [_scrollview addSubview:separ];
     
     
-    image = [UIImage imageNamed:@"button_send"];
+    image = [UIImage imageNamed:@"button_send.png"];
     self.sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_sendButton setBackgroundColor:[UIColor clearColor]];
     [_sendButton  setImage:image forState:UIControlStateNormal];
-    [_sendButton setFrame:CGRectMake(_bgTextView.frame.origin.x + _bgTextView.frame.size.width, _bgTextView.frame.origin.y, frame.size.width - (_bgTextView.frame.origin.x + _bgTextView.frame.size.width), _bgTextView.frame.size.height)];
+    [_sendButton setFrame:CGRectMake(_bgTextView.frame.origin.x + _bgTextView.frame.size.width + 5, _bgTextView.frame.origin.y, frame.size.width - (_bgTextView.frame.origin.x + _bgTextView.frame.size.width) - 10 , _bgTextView.frame.size.height)];
     [_sendButton addTarget:self action:@selector(sendClicked) forControlEvents:UIControlEventTouchUpInside];
     [_scrollview addSubview:_sendButton];
     
@@ -378,7 +378,7 @@
 
     NSDictionary* dict = (NSDictionary*)[_messages objectAtIndex:indexPath.section];
     NSNumber* state = (NSNumber*)[dict objectForKey:@"is_own"];
-    cell.imgName      = ([state intValue]) ? @"blue.png" : @"lime.png";
+    cell.imgName      = ([state intValue]) ? @"cloud_blue.png" : @"cloud_green.png";
     cell.tipRightward = ([state intValue]) ? YES : NO;
     cell.msgText      = (NSString*)[dict objectForKey:@"message"];
     

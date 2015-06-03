@@ -50,7 +50,7 @@
         
         [_mainButton setTitleColor:[UIColor colorWithRed:51/ 255.f green:102 / 255.f blue:0  alpha:1.0] forState:UIControlStateNormal];
         [_mainButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [_mainButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:13.f]];
+        [_mainButton.titleLabel setFont:[UIFont fontWithName:@"Gill Sans" size:13.f]];
         [_mainButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_mainButton];
         
@@ -69,7 +69,7 @@
         
         [_leftButton setTitleColor:[UIColor colorWithRed:51/ 255.f green:102 / 255.f blue:0  alpha:1.0] forState:UIControlStateNormal];
         [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [_leftButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:13.f]];
+        [_leftButton.titleLabel setFont:[UIFont fontWithName:@"Gill Sans" size:13.f]];
         [_leftButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_leftButton];
         [_leftButton setSelected:YES];
@@ -88,7 +88,7 @@
         
         [_rightButton setTitleColor:[UIColor colorWithRed:51/ 255.f green:102 / 255.f blue:0  alpha:1.0] forState:UIControlStateNormal];
         [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [_rightButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:13.f]];
+        [_rightButton.titleLabel setFont:[UIFont fontWithName:@"Gill Sans" size:13.f]];
         [_rightButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_rightButton];
         
@@ -108,7 +108,7 @@
         
         [_magazineButton setTitleColor:[UIColor colorWithRed:51/ 255.f green:102 / 255.f blue:0  alpha:1.0] forState:UIControlStateNormal];
         [_magazineButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [_magazineButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Light" size:13.f]];
+        [_magazineButton.titleLabel setFont:[UIFont fontWithName:@"Gill Sans" size:13.f]];
         [_magazineButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_magazineButton];
         

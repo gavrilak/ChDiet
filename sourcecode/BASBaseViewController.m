@@ -28,7 +28,7 @@
     [super viewDidLoad];
 
     UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"bg"] drawInRect:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - [UIImage imageNamed:@"tabbar_bg.png"].size.height-62)];
+    [[BASAppDelegate imageFromColor:[UIColor colorWithRed:200/255.0 green:250/255.0 blue:199/255.0 alpha:1]] drawInRect:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
@@ -41,6 +41,7 @@
     TheApp;
     UIButton *btn = nil;
     UIImage *btnImg  = nil;
+    UIImage *btnImgSelected  = nil;
     UIBarButtonItem *barBtnItem = nil;
     UIBarButtonItem *btn1 = nil;
     
@@ -60,10 +61,13 @@
             barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
             self.navigationItem.leftBarButtonItem = barBtnItem;
             
+            
             btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btnImg = [UIImage imageNamed:@"info.png"];
+            btnImg = [UIImage imageNamed:@"but_settings.png"];
+            btnImgSelected = [UIImage imageNamed:@"but_settings_s.png"];
             btn.frame = CGRectMake(0.f, 0.f, btnImg.size.width, btnImg.size.height);
             [btn setImage:btnImg forState:UIControlStateNormal];
+            [btn setImage:btnImgSelected forState:UIControlStateHighlighted];
             [btn addTarget:self action:@selector(btnInfoPressed) forControlEvents:UIControlEventTouchUpInside];
             
             barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
@@ -85,9 +89,11 @@
                 self.navigationItem.leftBarButtonItem = nil;
             }
             btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btnImg = [UIImage imageNamed:@"info.png"];
+            btnImg = [UIImage imageNamed:@"but_settings.png"];
+            btnImgSelected = [UIImage imageNamed:@"but_settings_s.png"];
             btn.frame = CGRectMake(0.f, 0.f, btnImg.size.width, btnImg.size.height);
             [btn setImage:btnImg forState:UIControlStateNormal];
+            [btn setImage:btnImgSelected forState:UIControlStateHighlighted];
             [btn addTarget:self action:@selector(btnInfoPressed) forControlEvents:UIControlEventTouchUpInside];
             
             barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
