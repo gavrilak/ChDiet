@@ -339,9 +339,9 @@
     
     headerLabel.backgroundColor      = [UIColor clearColor];
     headerLabel.opaque               = NO;
-    headerLabel.textColor            = [UIColor whiteColor];
-    headerLabel.highlightedTextColor = [UIColor whiteColor];
-    headerLabel.font                 = [UIFont boldSystemFontOfSize:12];
+    headerLabel.textColor            = [UIColor colorWithRed:132/255.0  green:194/255.0 blue:131/255.0 alpha:1];
+    headerLabel.highlightedTextColor = [UIColor colorWithRed:132/255.0  green:194/255.0 blue:131/255.0 alpha:1];
+    headerLabel.font                 = [UIFont fontWithName:@"Gill Sans" size:12.f];
     headerLabel.frame                = CGRectMake(115.0, 0.0, 300.0, 20.0);
     
 
@@ -415,7 +415,7 @@
     [self customTitleImage];
     if(app.tabView.tabIndex == 0){
         app.messageType = NUTRIT;
-    } else {
+    } else  if (app.tabView.tabIndex == 1 ) {
         app.messageType = SUPPORT;
     }
  

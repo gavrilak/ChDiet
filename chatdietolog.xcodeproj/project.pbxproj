@@ -137,6 +137,7 @@
 		A5D4D8E11A120D3A00FDEA67 /* register_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */; };
 		A5D4D8E41A120D8D00FDEA67 /* register_bg_6.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */; };
 		A5D4D8E51A120D8D00FDEA67 /* register_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */; };
+		BFC439B01B2085DC00F6E20A /* BASMagazineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC439AF1B2085DC00F6E20A /* BASMagazineViewController.m */; };
 		BFCDB6BE1A91EE1800E7C956 /* BASGuestInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCDB6BD1A91EE1800E7C956 /* BASGuestInputViewController.m */; };
 		BFCDB6C31A91F39600E7C956 /* guest_bg_6.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCDB6C01A91F39600E7C956 /* guest_bg_6.png */; };
 		BFCDB6C41A91F39600E7C956 /* guest_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCDB6C11A91F39600E7C956 /* guest_bg@2x.png */; };
@@ -366,6 +367,8 @@
 		A5D4D8E01A120D3A00FDEA67 /* register_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@3x.png"; path = "SourceCode/Resource/General/register_bg@3x.png"; sourceTree = SOURCE_ROOT; };
 		A5D4D8E21A120D8D00FDEA67 /* register_bg_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = register_bg_6.png; path = SourceCode/Resource/General/register_bg_6.png; sourceTree = SOURCE_ROOT; };
 		A5D4D8E31A120D8D00FDEA67 /* register_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "register_bg@2x.png"; path = "SourceCode/Resource/General/register_bg@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFC439AE1B2085DC00F6E20A /* BASMagazineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BASMagazineViewController.h; sourceTree = SOURCE_ROOT; };
+		BFC439AF1B2085DC00F6E20A /* BASMagazineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BASMagazineViewController.m; sourceTree = SOURCE_ROOT; };
 		BFCDB6BC1A91EE1800E7C956 /* BASGuestInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BASGuestInputViewController.h; sourceTree = SOURCE_ROOT; };
 		BFCDB6BD1A91EE1800E7C956 /* BASGuestInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BASGuestInputViewController.m; sourceTree = SOURCE_ROOT; };
 		BFCDB6C01A91F39600E7C956 /* guest_bg_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = guest_bg_6.png; path = SourceCode/Resource/General/guest_bg_6.png; sourceTree = SOURCE_ROOT; };
@@ -773,6 +776,7 @@
 		A59BBE8B1994C855000004A6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BFC439B11B2085E300F6E20A /* Magazine */,
 				BFCDB6BF1A91EE1D00E7C956 /* Guest input */,
 				A549845819E6ABFC00229AC7 /* Main */,
 				A595A9AB1A0900DA00EB02E2 /* Chat */,
@@ -854,6 +858,15 @@
 				A5D4D8DE1A120BA900FDEA67 /* BASRegistrationViewController.m */,
 			);
 			name = Registration;
+			sourceTree = "<group>";
+		};
+		BFC439B11B2085E300F6E20A /* Magazine */ = {
+			isa = PBXGroup;
+			children = (
+				BFC439AE1B2085DC00F6E20A /* BASMagazineViewController.h */,
+				BFC439AF1B2085DC00F6E20A /* BASMagazineViewController.m */,
+			);
+			name = Magazine;
 			sourceTree = "<group>";
 		};
 		BFCDB6BF1A91EE1D00E7C956 /* Guest input */ = {
@@ -1175,6 +1188,7 @@
 			files = (
 				A574F3981A08E7F600D5EFB3 /* BASMainViewController.m in Sources */,
 				BFCDB6BE1A91EE1800E7C956 /* BASGuestInputViewController.m in Sources */,
+				BFC439B01B2085DC00F6E20A /* BASMagazineViewController.m in Sources */,
 				A574F3951A08E7ED00D5EFB3 /* BASBaseViewController.m in Sources */,
 				A595A98B1A08F4A800EB02E2 /* MKStoreManager.m in Sources */,
 				A595A8F11A08EBD500EB02E2 /* SDWebImageDecoder.m in Sources */,
