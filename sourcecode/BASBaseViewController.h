@@ -15,7 +15,7 @@ typedef enum {
     INFOTYPE
 } NavBarType;
 
-@interface BASBaseViewController : UIViewController
+@interface BASBaseViewController : UIViewController <BASTabViewDelegate>
 
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UIImageView *titleView;

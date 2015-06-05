@@ -43,7 +43,6 @@
     UIImage *btnImg  = nil;
     UIImage *btnImgSelected  = nil;
     UIBarButtonItem *barBtnItem = nil;
-    UIBarButtonItem *btn1 = nil;
     
     [self.navigationItem setHidesBackButton:YES animated:NO];
     
@@ -151,16 +150,28 @@
     TheApp;
     [_titleView removeFromSuperview];
     _titleView = nil;
+    UIImage* image = nil;
+    switch (app.tabView.tabIndex) {
+        case -1:
+            image = [UIImage imageNamed:@"home_nav.png"];
+            break;
+        case 0:
+            image = [UIImage imageNamed:@"nutritionist_nav.png"];
+            break;
+        case 1:
+            image = [UIImage imageNamed:@"support_nav.png"];
+            break;
+        case 2:
+            image = [UIImage imageNamed:@"magaz_nav.png"];
+            break;
+    }
     
-    UIImage * image = [UIImage imageNamed:@"icon_nut_s.png"];
     CGRect frame = app.navigationController.navigationBar.frame;
     _titleView = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width / 2 - image.size.width / 2, frame.size.height / 2 - image.size.height /2, image.size.width, image.size.height)];
+    [_titleView setImage:image];
     _titleView.tag = 23;
     
-    [_titleView setImage:[UIImage imageNamed:@"icon_nut_s.png"]];
-    if(app.tabView.tabIndex == 1){
-        [_titleView setImage:[UIImage imageNamed:@"icon_t_s_s.png"]];
-    }
+   
     [app.navigationController.navigationBar addSubview:_titleView];
 }
 - (void)customTitle:(NSString*)title{
@@ -198,7 +209,7 @@
             [userDefaults  synchronize];
             app.isLogin = NO;
             app.navigationController = nil;
-            app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+            app.navigationController = [[UINavigationController alloc]initWithRootViewController:(UIViewController*)app.mainController];
             [app.window setRootViewController:app.navigationController];
             
         }
@@ -212,7 +223,30 @@
 }
 - (void)btnInfoPressed{
     TheApp;
-    [app.navigationController pushViewController:app.infoController animated:YES];
+    [app.navigationController pushViewController:(UIViewController*)app.infoController animated:YES];
 }
 
+- (void) BASTabView:(BASTabView *)view withTabClicked:(NSInteger)index {
+    TheApp;
+    [self removeTitleImage];
+    [self customTitleImage];
+    
+    switch (app.tabView.tabIndex) {
+        case -1:
+            app.navigationController = [[UINavigationController alloc]initWithRootViewController:(UIViewController*)app.mainController];
+            [app.window setRootViewController:app.navigationController];
+            break;
+        case 0:
+            app.messageType = NUTRIT;
+            break;
+        case 1:
+            app.messageType = SUPPORT;
+            break;
+        case 2:
+            app.navigationController = [[UINavigationController alloc]initWithRootViewController:(UIViewController*)app.magazineController];
+            [app.window setRootViewController:app.navigationController];
+            break;
+    }
+
+}
 @end

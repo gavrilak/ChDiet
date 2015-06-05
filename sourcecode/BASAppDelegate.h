@@ -11,6 +11,7 @@
 #import "BASTabView.h"
 
 @class BASMainViewController;
+@class BASMagazineViewController;
 @class BASChatViewController;
 @class BASInfoViewController;
 @class BASInputViewController;
@@ -39,6 +40,7 @@ static NSString *feature3Id = @"com.bestappstudio.Chat_33";
 
 @property (nonatomic,strong)  BASTabView* tabView;
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) BASMagazineViewController* magazineController;
 @property (strong, nonatomic) BASMainViewController* mainController;
 @property (nonatomic, strong) UINavigationController* navigationController;
 @property (nonatomic, strong) BASChatViewController* chatController;

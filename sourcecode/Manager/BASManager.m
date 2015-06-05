@@ -336,7 +336,7 @@
                 [userDefaults removeObjectForKey:@"isPurchaiseDate"];
                 [userDefaults synchronize];
                 app.isPurchaise = NO;
-                app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+                app.navigationController = [[UINavigationController alloc]initWithRootViewController:(UIViewController*)app.mainController];
                 [app.window setRootViewController:app.navigationController];
                 break;
             }
@@ -349,7 +349,7 @@
                 [userDefaults removeObjectForKey:@"isPurchaiseDate"];
                 [userDefaults synchronize];
                 app.isPurchaise = NO;
-                app.navigationController = [[UINavigationController alloc]initWithRootViewController:app.mainController];
+                app.navigationController = [[UINavigationController alloc]initWithRootViewController:(UIViewController*)app.mainController];
                 [app.window setRootViewController:app.navigationController];
                 break;
             }

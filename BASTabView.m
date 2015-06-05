@@ -180,41 +180,9 @@
         [_delegate BASTabView:self withTabClicked:_tabIndex];
     }
 }
-- (void)showState:(NSInteger)type withState:(BOOL)state{
-    
-    UIColor *color = [UIColor colorWithRed:179.f / 255.f green:235.f / 255.f blue:44.f / 255.f alpha:1.0];
-    /*NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
-    NSInteger hour = [components hour];
-    if(hour >= 11 && hour < 20){
-        [_leftLabel setTextColor:color];
-        [_leftLabel setText:@"Online"];
-         [_rightLabel setTextColor:color];
-        [_rightLabel setText:@"Online"];
-        return;
-    }*/
-   /* if(type == 0){
-        [_leftLabel setText:@"Offline"];
-        [_leftLabel setTextColor:[UIColor redColor]];
-        if(state){
-            [_leftLabel setTextColor:color];
-            
-            [_leftLabel setText:@"Online"];
-        }
-        
-    } else {
-        [_rightLabel setText:@"Offline"];
-        [_rightLabel setTextColor:[UIColor redColor]];
-        if(state){
-            [_rightLabel setTextColor:color];
-            
-            [_rightLabel setText:@"Online"];
-        }
-    } */
-}
+
 - (void)showNoticesCount:(NSUInteger)noticesCnt withSatate:(BOOL)state
 {
-    TheApp;
     [self.customBadge removeFromSuperview];
     self.customBadge = nil;
     if(noticesCnt > 0){

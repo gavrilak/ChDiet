@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BASMagazineViewController : BASBaseViewController
+@interface BASMagazineViewController : BASBaseViewController 
 
 @property (nonatomic, assign) BOOL isButtonPress;
 

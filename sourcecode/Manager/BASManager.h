@@ -42,7 +42,6 @@ typedef enum{
 - (NSDictionary*)formatRequest:(NSString*)command withParam:(id)param;
 
 - (void)initSocket;
-- (void)initLocationManager;
 - (void)checkPurshes;
 - (void)Restore;
 - (void)LogIn;

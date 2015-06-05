@@ -21,6 +21,6 @@
 @property (nonatomic,assign) NSInteger tabIndex;
 
 - (void)showNoticesCount:(NSUInteger)noticesCnt  withSatate:(BOOL)state;
-- (void)showState:(NSInteger)type withState:(BOOL)state;
+
 
 @end

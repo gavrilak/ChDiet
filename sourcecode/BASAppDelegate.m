@@ -6,6 +6,7 @@
 
 #import "BASAppDelegate.h"
 #import "BASMainViewController.h"
+#import "BASMagazineViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "BASChatViewController.h"
 #import "BASInfoViewController.h"
@@ -74,6 +75,7 @@
     self.infoController = [BASInfoViewController new];
     self.inputController = [BASInputViewController new];
     self.guestController = [BASGuestInputViewController new];
+    self.magazineController = [BASMagazineViewController new];
     
     if(_login == nil ){
        self.chatController = [[BASChatViewController alloc]init];

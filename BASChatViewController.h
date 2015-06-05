@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BASChatViewController : BASBaseViewController
+@interface BASChatViewController : BASBaseViewController <UITableViewDataSource, UITableViewDelegate, ManagerDelegate >
 
 @end

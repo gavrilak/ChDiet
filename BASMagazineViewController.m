@@ -15,8 +15,12 @@
 @implementation BASMagazineViewController
 
 - (void)viewDidLoad {
+    TheApp;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self.view addSubview:app.tabView];
+    app.tabView.delegate = self;
+   
 }
 
 - (void)didReceiveMemoryWarning {
